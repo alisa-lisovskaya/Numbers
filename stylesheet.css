@@ -1,0 +1,56 @@
+body {
+  font-family: Verdana, sans-serif;
+  font-size: 12pt;
+}
+
+.gameField {
+  align-content: center;
+}
+
+.row {
+  display: block;
+  vertical-align: top;
+  background-color: #FFB6C1;
+  outline: none;
+  border: none;
+  width: 100%;
+  padding: 1px; 
+}
+
+.cell {
+  display: inline-block;
+  vertical-align: top;
+  background-color: white;
+  outline: none;
+  cursor: pointer;
+  border: 1px black solid;
+  font-size: 14pt;
+  text-align: center;
+  text-transform: uppercase;
+  width: 20px;
+}
+
+.cell.selected {
+  background-color: yellow;
+}
+
+.gameField, .buttonField {
+  display: inline-block;
+  vertical-align: top;
+}
+
+button {
+  width: 150px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  text-transform: uppercase;
+  font-size: 10pt;
+  background-color: #FFF0F5;
+  outline: none;
+  cursor: pointer;
+}
+
+button:active, button:focus, button:hover {
+  background-color: #F5DFE6;
+}
