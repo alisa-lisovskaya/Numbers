@@ -31,12 +31,19 @@ body {
 }
 
 .cell.selected {
-  background-color: yellow;
+  background-color: #FFFF99
 }
 
-.gameField, .buttonField {
+.scoreField, .gameField, .buttonField {
   display: inline-block;
   vertical-align: top;
+  text-align: center;
+}
+
+#score {
+  width: 150px;
+  border: 1px solid black;
+  text-align: right;
 }
 
 button {

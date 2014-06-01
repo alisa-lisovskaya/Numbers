@@ -1,10 +1,18 @@
-var //Row = require("Row"),
-    //Cell = require("Cell"),
-    GameField;
+var GameField;
+
+/*  TODO  removeEmptyRow()
+    TODO  addNewNumbers()
+    TODO  hint()  <--- how should the possible moves be stored
+    TODO  score() <--- make score awesumer, with blinking flashing lights, music, and confetti
+    TODO  highScore() <--- save in localStorage unless this is not considered nice
+    TODO  maybe use underscore.js where I can and need (do I?)
+  */
 
 GameField = function () {
   this.setUp();
 };
+
+GameField.prototype.score = 0;
 
 GameField.prototype.getCell = function (id) {
   var n;
@@ -12,7 +20,8 @@ GameField.prototype.getCell = function (id) {
   return this.rows[n[0]].cells[n[1]];
 };
 
-
+// Checks if cells can be matched and removes them if they can
+// TODO: cells can also be matched if they are on different rows&columns, but all cells between them are empty
 GameField.prototype.matchCells = function (id1, id2) {
   var c1, c2;
   
@@ -30,6 +39,7 @@ GameField.prototype.matchCells = function (id1, id2) {
   return false;
 };
 
+// Checks if all cells between c1 and c2 are empty, column-wise
 GameField.prototype.noCellsBetweenInColumn = function (c1, c2) {
   var i, row1, row2,
       column = c1.columnNumber;
@@ -63,6 +73,7 @@ GameField.prototype.noCellsBetweenInColumn = function (c1, c2) {
   return true;
 };
 
+// Checks if all cells between c1 and c2 are empty, row-wise
 GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
   var i, column1, column2,
       row = c1.rowNumber;
@@ -82,7 +93,7 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
     return false;
   }
   
-  if (column1+1 === column2) {
+  if (column1+1 === column2) {  // if neighbours
     return true;
   }
   
@@ -97,28 +108,21 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
   return true;
 };
 
+// Removes cells
 GameField.prototype.matched = function (c1, c2) {
+  this.score += c1.number;
+  this.score += c2.number;
   c1.remove();
-  c1.print();
-  console.log(c1);
   c2.remove();
-  c2.print();
-  console.log(c2);
 };
 
-GameField.prototype.print = function () {
-  var i, j;
-  for (i in this.rows) {
-    console.log('Row ' + i);
-    console.log(this.rows[i]);
-    for (j in this.rows[i].cells) {
-      this.rows[i].cells[j].print();
-    }
-  }
-};
-
+// Adds field contents to the page in a proper manner
 GameField.prototype.paint = function () {
   $(".gameField").empty();
+  $("#score").empty();
+  
+  $("#score").append(this.score);
+  
   for (i in this.rows) {
     r = '<div class = "row">';
     for (j in this.rows[i].cells) {
@@ -130,9 +134,12 @@ GameField.prototype.paint = function () {
   }
 };
 
+// Sets up initial state of the game
 GameField.prototype.setUp = function () {
   var r;
+  
   this.rows = [];
+  this.score = 0;
   
   r = new Row([1,2,3,4,5,6,7,8,9,1], 0);
   this.rows.push(r);

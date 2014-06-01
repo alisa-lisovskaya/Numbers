@@ -1,5 +1,4 @@
-var Row; 
-//Cell = require("Cell"),
+var Row;
 
 /** @param cell Array<Number> */
 
