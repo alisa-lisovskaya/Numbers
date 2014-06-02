@@ -1,12 +1,20 @@
+var g;
+
 // Main script
-//  TODO add restart(), hint() and addMore()
+//  TODO add hint() and addMore()
 
 $(window).ready(function () {
-  var selected = [],
-      selectorFn,
-      g = new GameField();
+  start();
+});
+
+// (Re)starts the game
+function start () {
+  var selectorFn,
+      selected = [];
   
+  g = new GameField();
   g.paint();
+  showRules();
   
   // Handles selecting & matching the cells
   // TODO   deselect when clicked outside
@@ -45,16 +53,26 @@ $(window).ready(function () {
     };
   
   $('.cell').click(selectorFn);
-});
-
-function restart () {
-  alert("Implement me!");
 };
 
+// Adds more numbers when no more moves possible
 function addMore () {
-  alert("Implement me!");
+  g.addMore();
 };
 
+// Highlights next possible move
 function hint () {
   alert("Implement me!");
+};
+
+// Shows the rules
+function showRules () {
+  var r = "<div id='rules'><div id='clearRules' onclick='closeRules()'>X</div><strong>Rules</strong><br>This game has no rules. I'm proud to be a part of this number.</div>";
+  $('.ruleField').empty();
+  $('.ruleField').append(r);
+};
+
+// Removes the rules
+function closeRules () {
+  $('.ruleField').empty();
 };

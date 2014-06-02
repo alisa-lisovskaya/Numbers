@@ -134,6 +134,30 @@ GameField.prototype.paint = function () {
   }
 };
 
+// TODO   much is wrong here
+GameField.prototype.recursiveRowDeletion = function (id, last) {
+  console.log("row in process " + id);
+  console.log("last row " + last);
+  if (this.rows[id].isEmpty()) {
+    this.rows.splice(id,1);
+    this.rows[id].resetRowNumber();
+  }
+  while (id < last) {
+    this.recursiveRowDeletion(id+1);
+  }
+};
+
+// Adds more numbers
+// TODO   this is really ugly and doesn't work
+GameField.prototype.addMore = function () {
+
+  this.recursiveRowDeletion(0, this.rows.length);
+  
+  /*  for (j in this.rows[i].cells) {
+      r += '<div class = "cell" id="' + i + ':' + j +'">' + this.rows[i].cells[j].getNumber() + '</div>';
+    }*/
+};
+
 // Sets up initial state of the game
 GameField.prototype.setUp = function () {
   var r;
@@ -145,8 +169,14 @@ GameField.prototype.setUp = function () {
   this.rows.push(r);
   r = new Row([1,1,1,2,1,3,1,4,1,5], 1);
   this.rows.push(r);
-  r = new Row([1,6,1,7,1,8,1,9,0,0], 2);
+  r = new Row([1,1,1,1,1,3,7,6,4,9], 2);  // temp
   this.rows.push(r);
+  r = new Row([0,0,0,0,0,0,0,0,0,0], 3);  // temp
+  this.rows.push(r);
+  r = new Row([1,6,1,7,1,8,1,9,0,0], 4);  // temp
+  this.rows.push(r);
+  /*r = new Row([1,6,1,7,1,8,1,9,0,0], 2);
+  this.rows.push(r);*/
 }
 
 //module.exports = GameField;

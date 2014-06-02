@@ -3,8 +3,25 @@ body {
   font-size: 12pt;
 }
 
-.gameField {
-  align-content: center;
+.container {
+  width: 600px;
+  position: relative;
+  margin-left: 40%;
+}
+
+.gameField, .buttonField {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  margin: 20px;
+}
+
+.buttonField {
+  width: 200px;
+}
+
+.scoreField {
+  margin: 20px;
 }
 
 .row {
@@ -34,16 +51,31 @@ body {
   background-color: #FFFF99
 }
 
-.scoreField, .gameField, .buttonField {
-  display: inline-block;
-  vertical-align: top;
-  text-align: center;
-}
-
 #score {
   width: 150px;
   border: 1px solid black;
   text-align: right;
+}
+
+#rules {
+  width: 350px;
+  border: none;
+  border-radius: 10px;
+  font-size: 12pt;
+  background-color: #F5DFE6;
+  outline: none;
+  padding: 10px;
+  margin: 20px;
+}
+
+#clearRules {
+  float: right;
+  font-size: 10pt;
+  color: #FFF0F5;
+  font-weight: bold;
+  text-shadow: 3px 3px #FFC0CB;
+  cursor: pointer;
+  outline: none;
 }
 
 button {
@@ -56,6 +88,7 @@ button {
   background-color: #FFF0F5;
   outline: none;
   cursor: pointer;
+  margin: 5px;
 }
 
 button:active, button:focus, button:hover {

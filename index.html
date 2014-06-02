@@ -8,16 +8,19 @@
     <script type="text/javascript" src="js/GameField.js"></script>
   </head>
   <body>
-    <div class="scoreField">
-      <div> Awesum score</div>
-      <div id="score"></div>
+    <div class="container">
+      <div class="ruleField"></div>
+      <div class="scoreField">
+        <div> Awesum score</div>
+        <div id="score"></div>
+      </div>
+      <div class="gameField"></div>
+      <div class="buttonField">
+        <button onclick="start()">Restart</button>
+        <button onclick="addMore()">Add more</button>
+        <button onclick="hint()">Hint</button>
+        <button onclick="showRules()">Rules</button>
+      </div>
     </div>
-    <div class="gameField"></div>
-    <div class="buttonField">
-      <button onclick="restart()">Restart</button>
-      <button onclick="addMore()">Add more</button>
-      <button onclick="hint()">Hint</button>
-    </div>
-
   </body>
 </html>
