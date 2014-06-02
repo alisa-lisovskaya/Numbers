@@ -102,6 +102,7 @@ function paint () {
     }
     r += '</div>';
     $(".gameField").append(r);
-    console.log("GameField repainted");
   }
+  console.log("GameField repainted");
+  g.print();
 };

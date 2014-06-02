@@ -1,7 +1,6 @@
 var GameField;
 
-/*  TODO  removeEmptyRow()
-    TODO  addNewNumbers()
+/*  TODO  addNewNumbers()
     TODO  hint()  <--- how should the possible moves be stored
     TODO  score() <--- make score awesumer, with blinking flashing lights, music, and confetti
     TODO  highScore() <--- save in localStorage unless this is not considered nice
@@ -110,40 +109,61 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
 
 // Removes cells
 GameField.prototype.matched = function (c1, c2) {
+  var i;
+  
   this.score += c1.number;
   this.score += c2.number;
   c1.remove();
   c2.remove();
-};
-
-// TODO   much is wrong here
-GameField.prototype.recursiveRowDeletion = function (id, last) {
-  console.log("row in process " + id);
-  console.log("last row " + last);
-  if (this.rows[id].isEmpty()) {
-    this.rows.splice(id,1);
-    this.rows[id].resetRowNumber();
+  
+  if (this.rows[c1.rowNumber].isEmpty()) {
+    console.log("row " + c1.rowNumber + " empty");
+    i = c1.rowNumber;
+    console.log("resetting " + i);
+    this.rows.splice(c1.rowNumber,1);
+    for (i; i < this.rows.length; i++) {
+      console.log("resetting row " + i);
+      this.rows[i].resetRowNumber();
+    }
   }
-  while (id < last) {
-    this.recursiveRowDeletion(id+1);
+  if (this.rows[c2.rowNumber].isEmpty()) {
+    console.log("row " + c2.rowNumber + " empty");
+    i = c2.rowNumber;
+    console.log("resetting " + i);
+    this.rows.splice(c2.rowNumber,1);
+    for (i; i < this.rows.length; i++) {
+      console.log("resetting row " + i);
+      this.rows[i].resetRowNumber();
+    }
   }
 };
 
 // Adds more numbers
-// TODO   this is really ugly and doesn't work
 GameField.prototype.addMore = function () {
-
-  this.recursiveRowDeletion(0, this.rows.length);
+  var i, j;
   
-  /*  for (j in this.rows[i].cells) {
-      r += '<div class = "cell" id="' + i + ':' + j +'">' + this.rows[i].cells[j].getNumber() + '</div>';
-    }*/
+  for (i in this.rows) {
+    for (j in this.rows[i].cells) {
+      
+    }
+  }
 };
 
 // Returns current score
 GameField.prototype.getScore = function () {
   return this.score;
 }
+
+// Prints the gamefield contents on the sonsole
+GameField.prototype.print = function () {
+  var i, j;
+  for (i in this.rows) {
+   for (j in this.rows[i].cells) {
+     this.rows[i].cells[j].print();
+   }
+ }
+};
+
 
 // Sets up initial state of the game
 GameField.prototype.setUp = function () {
@@ -158,9 +178,11 @@ GameField.prototype.setUp = function () {
   this.rows.push(r);
   r = new Row([1,1,1,1,1,3,7,6,4,9], 2);  // temp
   this.rows.push(r);
-  r = new Row([0,0,0,0,0,0,0,0,0,0], 3);  // temp
+  r = new Row([0,0,1,0,0,0,0,0,0,0], 3);  // temp
   this.rows.push(r);
-  r = new Row([1,6,1,7,1,8,1,9,0,0], 4);  // temp
+  r = new Row([0,0,1,0,0,0,0,0,0,0], 4);  // temp
+  this.rows.push(r);
+  r = new Row([1,6,1,7,1,8,1,9,0,0], 5);  // temp
   this.rows.push(r);
   /*r = new Row([1,6,1,7,1,8,1,9,0,0], 2);
   this.rows.push(r);*/
