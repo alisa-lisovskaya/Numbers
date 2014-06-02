@@ -116,24 +116,6 @@ GameField.prototype.matched = function (c1, c2) {
   c2.remove();
 };
 
-// Adds field contents to the page in a proper manner
-GameField.prototype.paint = function () {
-  $(".gameField").empty();
-  $("#score").empty();
-  
-  $("#score").append(this.score);
-  
-  for (i in this.rows) {
-    r = '<div class = "row">';
-    for (j in this.rows[i].cells) {
-      r += '<div class = "cell" id="' + i + ':' + j +'">' + this.rows[i].cells[j].getNumber() + '</div>';
-    }
-    r += '</div>';
-    $(".gameField").append(r);
-    console.log("GameField repainted");
-  }
-};
-
 // TODO   much is wrong here
 GameField.prototype.recursiveRowDeletion = function (id, last) {
   console.log("row in process " + id);
@@ -157,6 +139,11 @@ GameField.prototype.addMore = function () {
       r += '<div class = "cell" id="' + i + ':' + j +'">' + this.rows[i].cells[j].getNumber() + '</div>';
     }*/
 };
+
+// Returns current score
+GameField.prototype.getScore = function () {
+  return this.score;
+}
 
 // Sets up initial state of the game
 GameField.prototype.setUp = function () {

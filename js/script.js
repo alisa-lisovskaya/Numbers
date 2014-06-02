@@ -1,4 +1,4 @@
-var g;
+var g, highScore = 0;
 
 // Main script
 //  TODO add hint() and addMore()
@@ -7,13 +7,14 @@ $(window).ready(function () {
   start();
 });
 
-// (Re)starts the game
+// Starts the game
 function start () {
   var selectorFn,
       selected = [];
   
   g = new GameField();
-  g.paint();
+  
+  paint();
   showRules();
   
   // Handles selecting & matching the cells
@@ -38,7 +39,7 @@ function start () {
         res = g.matchCells(selected[0], selected[1]); 
         console.log(res);
         if (res) {
-          g.paint();
+          paint();
           $('.cell').click(selectorFn);
         }
         break;
@@ -55,6 +56,14 @@ function start () {
   $('.cell').click(selectorFn);
 };
 
+// Restarts the game
+function restart () {
+  if (g.getScore() > this.highScore) {
+    this.highScore = g.getScore();
+  }
+  start();
+};
+
 // Adds more numbers when no more moves possible
 function addMore () {
   g.addMore();
@@ -67,7 +76,7 @@ function hint () {
 
 // Shows the rules
 function showRules () {
-  var r = "<div id='rules'><div id='clearRules' onclick='closeRules()'>X</div><strong>Rules</strong><br>This game has no rules. I'm proud to be a part of this number.</div>";
+  var r = "<div id='rules'><div id='clearRules' onclick='closeRules()'>X</div><strong>Rules</strong><br><br>This game has no rules.<br>I'm proud to be a part of this number.</div>";
   $('.ruleField').empty();
   $('.ruleField').append(r);
 };
@@ -75,4 +84,24 @@ function showRules () {
 // Removes the rules
 function closeRules () {
   $('.ruleField').empty();
+};
+
+// Adds field contents to the page in a proper manner
+function paint () {
+  $(".gameField").empty();
+  $("#score").empty();
+  $("#highScore").empty();
+  
+  $("#score").append(g.getScore());
+  $("#highScore").append(this.highScore);
+  
+  for (i in g.rows) {
+    r = '<div class = "row">';
+    for (j in g.rows[i].cells) {
+      r += '<div class = "cell" id="' + i + ':' + j +'">' + g.rows[i].cells[j].getNumber() + '</div>';
+    }
+    r += '</div>';
+    $(".gameField").append(r);
+    console.log("GameField repainted");
+  }
 };
