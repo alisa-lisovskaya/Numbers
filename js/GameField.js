@@ -139,20 +139,49 @@ GameField.prototype.matched = function (c1, c2) {
 };
 
 // Adds more numbers
+// TODO   do something with it
 GameField.prototype.addMore = function () {
-  var i, j;
+  var i, j, start;
   
-  for (i in this.rows) {
+  console.log(this.rows.length-1);
+  
+  start = this.rows[this.rows.length-1].getStartingEmptyCell();
+  
+  if (start < 10) {
+    
+  }
+  else {
+  }
+  
+  /*for (i in this.rows) {
     for (j in this.rows[i].cells) {
       
     }
+  }*/
+};
+
+// TODO   so unfinished
+GameField.prototype.fillRows = function (rowFill, startRow, startColumn, endRow, endColumn) {
+  var i, r, ar;
+  
+  if (startColumn === 0) {
+    ar = [];
+    for (i = startColumn; i < 10; i++) {
+    }
   }
+      
+      
+      
+      
+      
+  r = new Row([1,2,3,4,5,6,7,8,9,1], 0);
+  this.rows.push(r);
 };
 
 // Returns current score
 GameField.prototype.getScore = function () {
   return this.score;
-}
+};
 
 // Prints the gamefield contents on the sonsole
 GameField.prototype.print = function () {

@@ -27,11 +27,24 @@ Row.prototype.resetRowNumber = function () {
   var i;
   
   for (i = 0; i < 10; i++) {
-    console.log("IN ROW resetting ");
-    this.cells[i].print();
     this.cells[i].rowNumber -= 1;
-    this.cells[i].print();
   }
+};
+
+// Gets the first empty cell to start refilling from
+Row.prototype.getStartingEmptyCell = function () {
+  var i;
+  
+  console.log("starting search");
+  
+  for (i = 9; i >= 0; i--) {
+    console.log("checking " + i);
+    if (!this.cells[i].isEmpty()) { 
+      this.cells[i].print();
+      return i+1;
+    }
+  }
+  return 0;
 };
   
 //module.exports = Row;

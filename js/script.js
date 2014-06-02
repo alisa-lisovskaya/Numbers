@@ -104,5 +104,4 @@ function paint () {
     $(".gameField").append(r);
   }
   console.log("GameField repainted");
-  g.print();
 };

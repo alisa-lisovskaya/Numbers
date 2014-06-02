@@ -22,7 +22,7 @@ Cell.prototype.isEmpty = function () {
 
 // Prints Cell contents on console
 Cell.prototype.print = function () {
-  console.log(this.rowNumber + ', ' + this.columnNumber + ': ' + this.number);
+  console.log(this.rowNumber + ', ' + this.columnNumber + ': ' + this.number + " = " + this.isEmpty());
 };
 
 // Matches the cell to the parameter number-wise
