@@ -116,24 +116,34 @@ GameField.prototype.matched = function (c1, c2) {
   c1.remove();
   c2.remove();
   
-  if (this.rows[c1.rowNumber].isEmpty()) {
+  if (c1.rowNumber && this.rows[c1.rowNumber].isEmpty()) {
     console.log("row " + c1.rowNumber + " empty");
     i = c1.rowNumber;
-    console.log("resetting " + i);
+    console.log("resetting c1 " + i);
     this.rows.splice(c1.rowNumber,1);
-    for (i; i < this.rows.length; i++) {
-      console.log("resetting row " + i);
-      this.rows[i].resetRowNumber();
+    if (this.rows[i]) {
+      for (i; i < this.rows.length; i++) {
+        console.log("resetting row " + i);
+        this.rows[i].resetRowNumber();
+      }
     }
+    console.log("reset c1");
   }
-  if (this.rows[c2.rowNumber].isEmpty()) {
-    console.log("row " + c2.rowNumber + " empty");
-    i = c2.rowNumber;
-    console.log("resetting " + i);
-    this.rows.splice(c2.rowNumber,1);
-    for (i; i < this.rows.length; i++) {
-      console.log("resetting row " + i);
-      this.rows[i].resetRowNumber();
+  if (this.rows[c2.rowNumber]) {
+    console.log(c2);
+    console.log(this.rows[c2.rowNumber]);
+    if (this.rows[c2.rowNumber].isEmpty()) {
+      console.log("row " + c2.rowNumber + " empty");
+      i = c2.rowNumber;
+      console.log("resetting c2 " + i);
+      this.rows.splice(c2.rowNumber,1);
+      if (this.rows[i]) {
+        for (i; i < this.rows.length; i++) {
+          console.log("resetting row " + i);
+          this.rows[i].resetRowNumber();
+        }
+      }
+      console.log("reset c2");
     }
   }
 };
@@ -211,8 +221,8 @@ GameField.prototype.setUp = function () {
   this.rows.push(r);
   r = new Row([0,0,1,0,0,0,0,0,0,0], 4);  // temp
   this.rows.push(r);
-  r = new Row([1,6,1,7,1,8,1,9,0,0], 5);  // temp
-  this.rows.push(r);
+  //r = new Row([1,6,1,7,1,8,1,9,0,0], 5);  // temp
+  //this.rows.push(r);
   /*r = new Row([1,6,1,7,1,8,1,9,0,0], 2);
   this.rows.push(r);*/
 }
