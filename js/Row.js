@@ -13,6 +13,7 @@ Row = function (numbers, r) {
   }
 };
 
+// Checks if row is empty
 Row.prototype.isEmpty = function () {
   var i;
   
@@ -31,7 +32,7 @@ Row.prototype.resetRowNumber = function () {
   }
 };
 
-// Gets the first empty cell to start refilling from
+// Gets the first empty cell to start refilling from, 10 if it should be a new row
 Row.prototype.getStartingEmptyCell = function () {
   var i;
   
@@ -40,13 +41,13 @@ Row.prototype.getStartingEmptyCell = function () {
   for (i = 9; i >= 0; i--) {
     console.log("checking " + i);
     if (!this.cells[i].isEmpty()) { 
-      this.cells[i].print();
       return i+1;
     }
   }
   return 0;
 };
 
+// Checks if all cells to the right of c are empty
 Row.prototype.noCellsRight = function (c) {
   var i = c.columnNumber;
   
@@ -62,6 +63,7 @@ Row.prototype.noCellsRight = function (c) {
   return true;
 };
 
+// Checks if all cells to the left of c are empty
 Row.prototype.noCellsLeft = function (c) {
   var i = c.columnNumber;
   

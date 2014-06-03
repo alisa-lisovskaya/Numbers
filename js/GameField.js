@@ -1,7 +1,6 @@
 var GameField;
 
-/*  TODO  addNewNumbers()
-    TODO  hint()  <--- how should the possible moves be stored
+/*  TODO  hint()  <--- how should the possible moves be stored
     TODO  score() <--- make score awesumer, with blinking flashing lights, music, and confetti
     TODO  highScore() <--- save in localStorage unless this is not considered nice
   */
@@ -12,6 +11,7 @@ GameField = function () {
 
 GameField.prototype.score = 0;
 
+// Gets cell by id with row:column
 GameField.prototype.getCell = function (id) {
   var n;
   n = id.split(':');
@@ -70,7 +70,7 @@ GameField.prototype.noCellsBetweenInColumn = function (c1, c2) {
     row2 = c1.rowNumber;
   }
   else {
-    //console.log("addresses equal");
+    console.log("addresses equal");
     //c1.print();
     //c2.print();
     return false;
@@ -104,7 +104,7 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
     column2 = c1.columnNumber;
   }
   else {
-    //console.log("addresses equal");
+    console.log("addresses equal");
     //c1.print();
     //c2.print();
     return false;
@@ -125,7 +125,7 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
   return true;
 };
 
-// Removes cells
+// Removes cells, removes & reindexates rows if empty
 GameField.prototype.matched = function (c1, c2) {
   var i;
   
@@ -167,28 +167,34 @@ GameField.prototype.matched = function (c1, c2) {
 };
 
 // Adds more numbers
-// TODO   do something with it
 GameField.prototype.addMore = function () {
   var r, i, j, start, numbers;
   
   r = this.rows.length-1;  // row number to start adding with
   start = this.rows[r].getStartingEmptyCell();  // cell number to start edding with
   numbers = this.getAllNumbers();
+  console.log(r);
+  console.log(start);
   
+  if (numbers.length > 0) {
+    // Fills the empty part of last row if needed
+    while (start < 10) {
+      this.rows[r].cells[start].number = numbers.shift();
+      this.rows[r].cells[start].empty = false;
+      start++;
+    }
   
-  while (start < 10) {
-    this.rows[r].cells[start].number = numbers.shift();
-    this.rows[r].cells[start].empty = false;
-    start++;
+    r++;
+  
+    this.fillRows(r, numbers);
   }
-  
-  this.fillRows(r++, numbers);
-  
 };
 
-// TODO   so unfinished
+// Pushes new rows with numbers from number array starting with startRow
 GameField.prototype.fillRows = function (startRow, numbers) {
   var i, ar;
+  
+  console.log("filling ", startRow);
   
   while (numbers.length > 0) {
     ar = [];
@@ -206,6 +212,7 @@ GameField.prototype.fillRows = function (startRow, numbers) {
   }
 };
 
+// Gets all numbers from the field
 GameField.prototype.getAllNumbers = function () {
   var numbers = [];
   

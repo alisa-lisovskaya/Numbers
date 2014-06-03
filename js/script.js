@@ -1,7 +1,7 @@
 var g, selectorFn, highScore = 0;
 
 // Main script
-//  TODO add hint() and addMore()
+//  TODO add hint()
 
 $(window).ready(function () {
   start();
@@ -10,11 +10,6 @@ $(window).ready(function () {
 // Starts the game
 function start () {
   var selected = [];
-  
-  g = new GameField();
-  
-  paint();
-  showRules();
   
   // Handles selecting & matching the cells
   // TODO   deselect when clicked outside
@@ -50,6 +45,11 @@ function start () {
         break;
       } 
     };
+  
+  g = new GameField();
+  
+  paint();
+  showRules();
 };
 
 // Restarts the game

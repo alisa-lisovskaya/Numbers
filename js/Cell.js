@@ -16,6 +16,7 @@ Cell.prototype.empty = true;
 Cell.prototype.number = 0;
 Cell.prototype.pair = 0;
 
+// Checks if cell is empty
 Cell.prototype.isEmpty = function () {
   return this.empty;
 };
