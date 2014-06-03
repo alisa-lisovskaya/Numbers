@@ -169,41 +169,55 @@ GameField.prototype.matched = function (c1, c2) {
 // Adds more numbers
 // TODO   do something with it
 GameField.prototype.addMore = function () {
-  var i, j, start;
+  var r, i, j, start, numbers;
   
-  console.log(this.rows.length-1);
+  r = this.rows.length-1;  // row number to start adding with
+  start = this.rows[r].getStartingEmptyCell();  // cell number to start edding with
+  numbers = this.getAllNumbers();
   
-  start = this.rows[this.rows.length-1].getStartingEmptyCell();
   
-  if (start < 10) {
-    
+  while (start < 10) {
+    this.rows[r].cells[start].number = numbers.shift();
+    this.rows[r].cells[start].empty = false;
+    start++;
   }
-  else {
-  }
   
-  /*for (i in this.rows) {
-    for (j in this.rows[i].cells) {
-      
-    }
-  }*/
+  this.fillRows(r++, numbers);
+  
 };
 
 // TODO   so unfinished
-GameField.prototype.fillRows = function (rowFill, startRow, startColumn, endRow, endColumn) {
-  var i, r, ar;
+GameField.prototype.fillRows = function (startRow, numbers) {
+  var i, ar;
   
-  if (startColumn === 0) {
+  while (numbers.length > 0) {
     ar = [];
-    for (i = startColumn; i < 10; i++) {
+    for (i = 0; i < 10; i++) {
+      if (numbers.length > 0) {
+        ar.push(numbers.shift());
+      }
+      else {
+        ar.push(0);
+      }
+    }
+    
+    this.rows.push(new Row(ar, startRow));
+    startRow++;
+  }
+};
+
+GameField.prototype.getAllNumbers = function () {
+  var numbers = [];
+  
+  for (i in this.rows) {
+    for (j in this.rows[i].cells) {
+      if (!this.rows[i].cells[j].isEmpty()) {
+        numbers.push(this.rows[i].cells[j].number);
+      }
     }
   }
-      
-      
-      
-      
-      
-  r = new Row([1,2,3,4,5,6,7,8,9,1], 0);
-  this.rows.push(r);
+  
+  return numbers;
 };
 
 // Returns current score

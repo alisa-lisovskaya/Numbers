@@ -1,4 +1,4 @@
-var g, highScore = 0;
+var g, selectorFn, highScore = 0;
 
 // Main script
 //  TODO add hint() and addMore()
@@ -9,8 +9,7 @@ $(window).ready(function () {
 
 // Starts the game
 function start () {
-  var selectorFn,
-      selected = [];
+  var selected = [];
   
   g = new GameField();
   
@@ -40,7 +39,6 @@ function start () {
         console.log(res);
         if (res) {
           paint();
-          $('.cell').click(selectorFn);
         }
         break;
     
@@ -52,8 +50,6 @@ function start () {
         break;
       } 
     };
-  
-  $('.cell').click(selectorFn);
 };
 
 // Restarts the game
@@ -67,6 +63,7 @@ function restart () {
 // Adds more numbers when no more moves possible
 function addMore () {
   g.addMore();
+  paint();
 };
 
 // Highlights next possible move
@@ -104,5 +101,6 @@ function paint () {
     $(".gameField").append(r);
   }
   console.log("GameField repainted");
+  $('.cell').click(selectorFn);
   g.print();
 };
