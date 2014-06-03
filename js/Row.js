@@ -46,5 +46,35 @@ Row.prototype.getStartingEmptyCell = function () {
   }
   return 0;
 };
+
+Row.prototype.noCellsRight = function (c) {
+  var i = c.columnNumber;
+  
+  console.log("search right from " + i);
+  if (i === 9) { return true; }
+  
+  for (i++; i < 10; i++) {
+    console.log("Checking " + i);
+    if (!this.cells[i].isEmpty()) { 
+      return false;
+    }
+  }
+  return true;
+};
+
+Row.prototype.noCellsLeft = function (c) {
+  var i = c.columnNumber;
+  
+  console.log("search left from " + i);
+  if (i === 0) { return true; }
+  
+  for (i--; i >= 0; i--) {
+    console.log("Checking " + i);
+    if (!this.cells[i].isEmpty()) { 
+      return false;
+    }
+  }
+  return true;
+};
   
 //module.exports = Row;

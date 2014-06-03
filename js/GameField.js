@@ -4,7 +4,6 @@ var GameField;
     TODO  hint()  <--- how should the possible moves be stored
     TODO  score() <--- make score awesumer, with blinking flashing lights, music, and confetti
     TODO  highScore() <--- save in localStorage unless this is not considered nice
-    TODO  maybe use underscore.js where I can and need (do I?)
   */
 
 GameField = function () {
@@ -20,19 +19,38 @@ GameField.prototype.getCell = function (id) {
 };
 
 // Checks if cells can be matched and removes them if they can
-// TODO: cells can also be matched if they are on different rows&columns, but all cells between them are empty
 GameField.prototype.matchCells = function (id1, id2) {
-  var c1, c2;
+  var c1, c2, higherCell, lowerCell;
   
   c1 = this.getCell(id1);
   c2 = this.getCell(id2);
   
   if (c1.matches(c2)) {
-    console.log("Cells matched");
+    //console.log("Cells matched");
     if ((c1.sameRow(c2) && this.noCellsBetweenInRow(c1, c2)) || (c1.sameColumn(c2) && this.noCellsBetweenInColumn(c1, c2))) {
-      console.log("Cells will be deleted");
+      //console.log("Cells will be deleted");
       this.matched(c1, c2);
       return true;
+    }
+    else {
+      if (c1.rowNumber < c2.rowNumber) {
+        higherCell = c1;
+        lowerCell = c2;
+      }
+      else {
+        higherCell = c2;
+        lowerCell = c1;
+      }
+      
+      console.log("high = " + higherCell.rowNumber);
+      console.log("low = " + lowerCell.rowNumber);
+      console.log(higherCell.rowNumber === lowerCell.rowNumber-1);
+      
+      if ((higherCell.rowNumber === lowerCell.rowNumber-1) && this.rows[higherCell.rowNumber].noCellsRight(higherCell) && this.rows[lowerCell.rowNumber].noCellsLeft(lowerCell)) {
+        console.log("passed!");
+        this.matched(c1, c2);
+        return true;
+      }
     }
   }
   return false;
@@ -52,9 +70,9 @@ GameField.prototype.noCellsBetweenInColumn = function (c1, c2) {
     row2 = c1.rowNumber;
   }
   else {
-    console.log("addresses equal");
-    c1.print();
-    c2.print();
+    //console.log("addresses equal");
+    //c1.print();
+    //c2.print();
     return false;
   }
   
@@ -65,8 +83,8 @@ GameField.prototype.noCellsBetweenInColumn = function (c1, c2) {
   else {
     for (i = row1+1; i < row2; i++) {
       if (!this.rows[i].cells[column].isEmpty()) { return false; }
-      console.log("Cell empty: ");
-      this.rows[i].cells[column].print();
+      //console.log("Cell empty: ");
+      //this.rows[i].cells[column].print();
     }
   }
   return true;
@@ -86,9 +104,9 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
     column2 = c1.columnNumber;
   }
   else {
-    console.log("addresses equal");
-    c1.print();
-    c2.print();
+    //console.log("addresses equal");
+    //c1.print();
+    //c2.print();
     return false;
   }
   
@@ -99,8 +117,8 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
   else {
     for (i = column1+1; i < column2; i++) {
       if (!this.rows[row].cells[i].isEmpty()) { return false; }
-      console.log("Cell empty: ");
-      this.rows[row].cells[i].print();
+      //console.log("Cell empty: ");
+      //this.rows[row].cells[i].print();
     }
   }
   
@@ -117,33 +135,33 @@ GameField.prototype.matched = function (c1, c2) {
   c2.remove();
   
   if (c1.rowNumber && this.rows[c1.rowNumber].isEmpty()) {
-    console.log("row " + c1.rowNumber + " empty");
+    //console.log("row " + c1.rowNumber + " empty");
     i = c1.rowNumber;
-    console.log("resetting c1 " + i);
+    //console.log("resetting c1 " + i);
     this.rows.splice(c1.rowNumber,1);
     if (this.rows[i]) {
       for (i; i < this.rows.length; i++) {
-        console.log("resetting row " + i);
+        //console.log("resetting row " + i);
         this.rows[i].resetRowNumber();
       }
     }
-    console.log("reset c1");
+    //console.log("reset c1");
   }
   if (this.rows[c2.rowNumber]) {
     console.log(c2);
     console.log(this.rows[c2.rowNumber]);
     if (this.rows[c2.rowNumber].isEmpty()) {
-      console.log("row " + c2.rowNumber + " empty");
+      //console.log("row " + c2.rowNumber + " empty");
       i = c2.rowNumber;
-      console.log("resetting c2 " + i);
+      //console.log("resetting c2 " + i);
       this.rows.splice(c2.rowNumber,1);
       if (this.rows[i]) {
         for (i; i < this.rows.length; i++) {
-          console.log("resetting row " + i);
+          //console.log("resetting row " + i);
           this.rows[i].resetRowNumber();
         }
       }
-      console.log("reset c2");
+      //console.log("reset c2");
     }
   }
 };
