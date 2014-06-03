@@ -178,7 +178,7 @@ GameField.prototype.addMore = function () {
   
   if (numbers.length > 0) {
     // Fills the empty part of last row if needed
-    while (start < 10) {
+    while (start < 9) {
       this.rows[r].cells[start].number = numbers.shift();
       this.rows[r].cells[start].empty = false;
       start++;
@@ -198,7 +198,7 @@ GameField.prototype.fillRows = function (startRow, numbers) {
   
   while (numbers.length > 0) {
     ar = [];
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 9; i++) {
       if (numbers.length > 0) {
         ar.push(numbers.shift());
       }
@@ -250,20 +250,21 @@ GameField.prototype.setUp = function () {
   this.rows = [];
   this.score = 0;
   
-  r = new Row([1,2,3,4,5,6,7,8,9,1], 0);
+  r = new Row([1,2,3,4,5,6,7,8,9], 0);
   this.rows.push(r);
-  r = new Row([1,1,1,2,1,3,1,4,1,5], 1);
+  r = new Row([1,1,1,1,2,1,3,1,4], 1);
   this.rows.push(r);
-  r = new Row([1,1,1,1,1,3,7,6,4,9], 2);  // temp
-  this.rows.push(r);
-  r = new Row([0,0,1,0,0,0,0,0,0,0], 3);  // temp
-  this.rows.push(r);
-  r = new Row([0,0,1,0,0,0,0,0,0,0], 4);  // temp
-  this.rows.push(r);
+  //r = new Row([1,1,1,1,1,3,7,6,4,9], 2);  // temp
+  //this.rows.push(r);
+  //r = new Row([0,0,1,0,0,0,0,0,0,0], 3);  // temp
+  //this.rows.push(r);
+  //r = new Row([0,0,1,0,0,0,0,0,0,0], 4);  // temp
+  //this.rows.push(r);
   //r = new Row([1,6,1,7,1,8,1,9,0,0], 5);  // temp
   //this.rows.push(r);
-  /*r = new Row([1,6,1,7,1,8,1,9,0,0], 2);
-  this.rows.push(r);*/
+  r = new Row([1,5,1,6,1,7,1,8,1], 2);
+  this.rows.push(r);
+  r = new Row([9,0,0,0,0,0,0,0,0], 3);
 }
 
 //module.exports = GameField;

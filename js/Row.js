@@ -6,7 +6,7 @@ Row = function (numbers, r) {
   var c, i;
   this.cells = [];
   if (numbers) {
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 9; i++) {
       c = new Cell({number: numbers[i], columnNumber: i, rowNumber: r});
       this.cells.push(c);
     }
@@ -17,7 +17,7 @@ Row = function (numbers, r) {
 Row.prototype.isEmpty = function () {
   var i;
   
-  for (i = 0; i < 10; i++) {
+  for (i = 0; i < 9; i++) {
     if (!this.cells[i].isEmpty()) { return false; }
   }
   return true;
@@ -27,18 +27,18 @@ Row.prototype.isEmpty = function () {
 Row.prototype.resetRowNumber = function () {
   var i;
   
-  for (i = 0; i < 10; i++) {
+  for (i = 0; i < 9; i++) {
     this.cells[i].rowNumber -= 1;
   }
 };
 
-// Gets the first empty cell to start refilling from, 10 if it should be a new row
+// Gets the first empty cell to start refilling from, 9 if it should be a new row
 Row.prototype.getStartingEmptyCell = function () {
   var i;
   
   console.log("starting search");
   
-  for (i = 9; i >= 0; i--) {
+  for (i = 8; i >= 0; i--) {
     console.log("checking " + i);
     if (!this.cells[i].isEmpty()) { 
       return i+1;
@@ -52,9 +52,9 @@ Row.prototype.noCellsRight = function (c) {
   var i = c.columnNumber;
   
   console.log("search right from " + i);
-  if (i === 9) { return true; }
+  if (i === 8) { return true; }
   
-  for (i++; i < 10; i++) {
+  for (i++; i < 9; i++) {
     console.log("Checking " + i);
     if (!this.cells[i].isEmpty()) { 
       return false;

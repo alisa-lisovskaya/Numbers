@@ -2,6 +2,10 @@ var g, selectorFn, highScore = 0;
 
 // Main script
 //  TODO add hint()
+//  TODO  add cancel()
+//  TODO add severity levels
+//  TODO add redistribution()
+//  TODO add timePlayed()
 
 $(window).ready(function () {
   start();
