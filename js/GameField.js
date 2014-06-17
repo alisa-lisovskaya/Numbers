@@ -127,36 +127,51 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
 
 // Removes cells, removes & reindexates rows if empty
 GameField.prototype.matched = function (c1, c2) {
+  var move = {};
+  
   this.score += c1.number;
   this.score += c2.number;
     
-  this.removedCells.push(c1.clone());
-  this.removedCells.push(c2.clone());
+  move.cell1 = c1.clone();
+  move.cell2 = c2.clone();
   
   c1.remove();
   c2.remove();
   
   if (c1.rowNumber && this.rows[c1.rowNumber].isEmpty()) {
-    this.reindexateRows(c1.rowNumber);
+    this.reindexRowsDelete(c1.rowNumber);
+    move.row1 = c1.rowNumber;
   }
   if (this.rows[c2.rowNumber]) {
     if (this.rows[c2.rowNumber].isEmpty()) {
-      this.reindexateRows(c2.rowNumber);
+      this.reindexRowsDelete(c2.rowNumber);
+      move.row2 = c2.rowNumber;
     }
   }
+  
+  this.memory.push(move);
 };
 
-// Removes the row with number r and reindexates all rows after it
-GameField.prototype.reindexateRows = function (r) {
+// Removes the row with number r and decrements the numbers of all rows after it
+GameField.prototype.reindexRowsDelete = function (r) {
   var i = r;
-  
-  this.removedRows.push(r);
   
   this.rows.splice(r,1);
   
   if (this.rows[i]) {
     for (i; i < this.rows.length; i++) {
-      this.rows[i].resetRowNumber();
+      this.rows[i].rowNumberDecrement();
+    }
+  }
+};
+
+// Increments the numbers of all rows starting with r
+GameField.prototype.reindexRowsInsert = function (r) {
+  var i = r;
+  
+  if (this.rows[i]) {
+    for (i; i < this.rows.length; i++) {
+      this.rows[i].rowNumberIncrement();
     }
   }
 };
@@ -175,7 +190,7 @@ GameField.prototype.addMore = function () {
     // Fills the empty part of last row if needed
     while (start < 9) {
       this.rows[r].cells[start].number = numbers.shift();
-      this.rows[r].cells[start].empty = false;
+      //this.rows[r].cells[start].empty = false;
       start++;
     }
   
@@ -187,25 +202,30 @@ GameField.prototype.addMore = function () {
 
 // Restores the last removed pair to the field
 GameField.prototype.restore = function () {
-  var c1, c2;
+  var move, c1, c2;
   
-  console.log(this.removedCells);
-  console.log(this.removedRows);
+  //console.log(JSON.stringify(this.memory));
   
-  if (this.removedRows.length === 0) {
-    c1 = this.removedCells[0];
-    c2 = this.removedCells[1];
+  if (this.memory.length > 0) {
+    move = this.memory.pop();
     
-    this.rows[c1.rowNumber].cells[c1.columnNumber].number = c1.number;
-    this.rows[c2.rowNumber].cells[c2.columnNumber].number = c2.number;
+    c1 = move.cell1;
+    c2 = move.cell2;
+    
+    // if rows have been deleted, they need to be restored
+    if (move.row1) {
+      this.reindexRowsInsert(move.row1);
+      this.rows.splice(move.row1, 0, new Row ([], move.row1));
+    }
+    if (move.row2) {
+      this.reindexRowsInsert(move.row2);
+      this.rows.splice(move.row2, 0, new Row ([], move.row2));
+    }
+    
+    // now cells can be restored in the rows they've been in
+    this.rows[c1.rowNumber].cells[c1.columnNumber] = c1;
+    this.rows[c2.rowNumber].cells[c2.columnNumber] = c2;
   }
-  else {
-    
-    
-    
-  }
-  this.removedCells = [];
-  this.removedRows = [];
 };
 
 // Pushes new rows with numbers from number array starting with startRow
@@ -250,7 +270,7 @@ GameField.prototype.getScore = function () {
   return this.score;
 };
 
-// Prints the gamefield contents on the sonsole
+// Prints the gamefield contents on the console
 GameField.prototype.print = function () {
   var i, j;
   for (i in this.rows) {
@@ -266,8 +286,7 @@ GameField.prototype.setUp = function () {
   var r;
   
   this.rows = [];
-  this.removedCells = [];
-  this.removedRows = [];
+  this.memory = [];
   this.score = 0;
   
   r = new Row([1,2,3,4,5,6,7,8,9], 0);
@@ -278,13 +297,15 @@ GameField.prototype.setUp = function () {
   //this.rows.push(r);
   //r = new Row([0,0,1,0,0,0,0,0,0,0], 3);  // temp
   //this.rows.push(r);
-  r = new Row([0,0,1,0,0,0,9,0,0,0], 2);  // temp
+  r = new Row([0,0,1,0,0,0,9,0,0], 2);  // temp
+  this.rows.push(r);
+  r = new Row([0,0,1,0,0,0,9,0,0], 3);  // temp
   this.rows.push(r);
   //r = new Row([1,6,1,7,1,8,1,9,0,0], 5);  // temp
   //this.rows.push(r);
-  r = new Row([1,5,1,6,1,7,1,8,1], 3);
+  r = new Row([1,5,1,6,1,7,1,8,1], 4);
   this.rows.push(r);
-  r = new Row([9,0,0,0,0,0,0,0,0], 4);
+  r = new Row([9,0,0,0,0,0,0,0,0], 5);
   this.rows.push(r);
 }
 

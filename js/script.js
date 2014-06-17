@@ -1,12 +1,11 @@
-var g, selectorFn, deselectorFn, highScore = 0, matched = [];
+var g, selectorFn, deselectorFn, highScore = 0;
 
 // Main script
 //  TODO  cool header with the title :)
+//  TODO  make numbers out of pictures
 //  TODO  add hint()
-//  TODO  add cancel()
 //  TODO  add severity levels
-//  TODO  add redistribution() <--- do we need it?
-//  TODO  add timePlayed()
+//  TODO  add timePlayed() : http://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
 
 $(window).ready(function () {
   start();
@@ -17,15 +16,15 @@ function start () {
   var selected = [];
   
   // Handles selecting & matching the cells
-  // TODO   mb deselect when unmatching cells selected
-  // TODO   when two unmatching selected & 3rd is clicked, deselect the first one, match two remaining
+  // TODO   mb deselect when unmatching cells selected (then default case is not needed)
   // TODO   one day: make cool animation for cells disappearing (one day, one day)
+  // TODO   keep in mind that "_" will not stand for empty cells forever, modify switch accordingly
   selectorFn = function() {
     var res, node = $(this);
     
     switch (selected.length) {
       case 0:
-        if (node.text() !== "_") {
+        if (node.text() !== "_") {      // we only select non-empty cells
           node.addClass('selected');
           selected.push(node.attr('id'));
           //console.log("FIRST: " + selected);
@@ -39,20 +38,27 @@ function start () {
           selected.push(node.attr('id'));
           //console.log("Second: " + selected);
           res = g.matchCells(selected[0], selected[1]); 
-          //console.log(res);
           if (res) {
-            matched = selected;
             paint();
           }
         }
         break;
     
       default:
-        $('.selected').removeClass('selected');
         if (node.text() !== "_") {
+          // deselect first selected element
+          $("#"+selected[0]).removeClass('selected');
+          selected.splice(0,1);
+          
+          // add new element
           node.addClass('selected');
-          selected = [node.attr('id')];
-          //console.log("Emptied: " + selected);
+          selected.push(node.attr('id'));
+          g.matchCells(selected[0], selected[1]); 
+          
+          // deselect all
+          $('.selected').removeClass('selected');
+          selected = [];
+          paint();
         }
         break;
       } 
@@ -68,7 +74,7 @@ function start () {
   g = new GameField();
   
   paint();
-  showRules();
+  showRules();  // TODO   rules should not reappear on restart if they were closed
 };
 
 // Restarts the game
@@ -86,11 +92,10 @@ function addMore () {
 };
 
 // Cancels the last move
+// TODO   can alert when no more moves left to restore: http://api.jqueryui.com/dialog/
+// TODO   can use the same library for rules maybe
 function cancel () {
-  //if (matched.length > 0) {
-    g.restore();
-    //g.restore(matched[1]);
-  //}
+  g.restore();
   paint();
 };
 

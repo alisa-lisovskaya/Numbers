@@ -5,9 +5,16 @@ var Row;
 Row = function (numbers, r) {
   var c, i;
   this.cells = [];
-  if (numbers) {
+  if (numbers.length >= 9) {
     for (i = 0; i < 9; i++) {
       c = new Cell({number: numbers[i], columnNumber: i, rowNumber: r});
+      this.cells.push(c);
+    }
+  }
+  // insert empty row if less than 9 numbers provided in an array
+  else {
+    for (i = 0; i < 9; i++) {
+      c = new Cell({number: 0, columnNumber: i, rowNumber: r});
       this.cells.push(c);
     }
   }
@@ -24,11 +31,20 @@ Row.prototype.isEmpty = function () {
 };
 
 // Sets row number to one lower and recalculates it for all cells in row
-Row.prototype.resetRowNumber = function () {
+Row.prototype.rowNumberDecrement = function () {
   var i;
   
   for (i = 0; i < 9; i++) {
     this.cells[i].rowNumber -= 1;
+  }
+};
+
+// Sets row number to one higher and recalculates it for all cells in row
+Row.prototype.rowNumberIncrement = function () {
+  var i;
+  
+  for (i = 0; i < 9; i++) {
+    this.cells[i].rowNumber += 1;
   }
 };
 
@@ -40,9 +56,7 @@ Row.prototype.getStartingEmptyCell = function () {
   
   for (i = 8; i >= 0; i--) {
     //console.log("checking " + i);
-    if (!this.cells[i].isEmpty()) { 
-      return i+1;
-    }
+    if (!this.cells[i].isEmpty()) { return i+1; }
   }
   return 0;
 };
@@ -56,9 +70,7 @@ Row.prototype.noCellsRight = function (c) {
   
   for (i++; i < 9; i++) {
     //console.log("Checking " + i);
-    if (!this.cells[i].isEmpty()) { 
-      return false;
-    }
+    if (!this.cells[i].isEmpty()) { return false; }
   }
   return true;
 };
@@ -72,9 +84,7 @@ Row.prototype.noCellsLeft = function (c) {
   
   for (i--; i >= 0; i--) {
     //console.log("Checking " + i);
-    if (!this.cells[i].isEmpty()) { 
-      return false;
-    }
+    if (!this.cells[i].isEmpty()) { return false; }
   }
   return true;
 };

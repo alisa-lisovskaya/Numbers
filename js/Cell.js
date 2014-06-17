@@ -2,19 +2,14 @@ var Cell;
 
 Cell = function (specObj) {
   if (specObj) {
+    this.number = specObj.number;
     if (specObj.number != 0) {
-      this.empty = false;
-      this.number = specObj.number;
       this.pair = 10 - this.number;
     }
     this.rowNumber = specObj.rowNumber;
     this.columnNumber = specObj.columnNumber;
   }
 };
-
-Cell.prototype.empty = true;
-Cell.prototype.number = 0;
-Cell.prototype.pair = 0;
 
 // Returns a clone of the cell
 Cell.prototype.clone = function () {
@@ -29,16 +24,17 @@ Cell.prototype.clone = function () {
 
 // Checks if cell is empty
 Cell.prototype.isEmpty = function () {
-  return this.empty;
+  return this.number === 0;
 };
 
 // Prints Cell contents on console
 Cell.prototype.print = function () {
-  console.log(this.rowNumber + ', ' + this.columnNumber + ': ' + this.number + " = " + this.isEmpty());
+  console.log(this.rowNumber + ', ' + this.columnNumber + ': ' + this.number + " / " + this.pair + " = " + this.isEmpty());
 };
 
 // Matches the cell to the parameter number-wise
 Cell.prototype.matches = function (c2) {
+  // console.log("matchig " + this.number + " to " + c2.number);
   if (this.isEmpty() || c2.isEmpty()) {
     return false;
   }
@@ -53,9 +49,9 @@ Cell.prototype.sameColumn = function (c2) {
     return false;
   }
   else {
-    //if (this.columnNumber === c2.columnNumber) {
-      //console.log("same column!");
-    //}
+    /*if (this.columnNumber === c2.columnNumber) {
+      console.log("same column!");
+    }*/
     return this.columnNumber === c2.columnNumber;
   }
 }
@@ -66,9 +62,9 @@ Cell.prototype.sameRow = function (c2) {
     return false;
   }
   else {
-    //if (this.rowNumber === c2.rowNumber) {
-      //console.log("same row!");
-    //}
+    /*if (this.rowNumber === c2.rowNumber) {
+      console.log("same row!");
+    }*/
     return this.rowNumber === c2.rowNumber;
   }
 }
@@ -81,7 +77,6 @@ Cell.prototype.getNumber = function () {
 
 // Removes cell making it appear empty
 Cell.prototype.remove = function () {
-  this.empty = true;
   this.number = 0;
   this.pair = 0;
   return this;
