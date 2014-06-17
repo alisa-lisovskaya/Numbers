@@ -42,12 +42,12 @@ GameField.prototype.matchCells = function (id1, id2) {
         lowerCell = c1;
       }
       
-      console.log("high = " + higherCell.rowNumber);
-      console.log("low = " + lowerCell.rowNumber);
-      console.log(higherCell.rowNumber === lowerCell.rowNumber-1);
+      //console.log("high = " + higherCell.rowNumber);
+      //console.log("low = " + lowerCell.rowNumber);
+      //console.log(higherCell.rowNumber === lowerCell.rowNumber-1);
       
       if ((higherCell.rowNumber === lowerCell.rowNumber-1) && this.rows[higherCell.rowNumber].noCellsRight(higherCell) && this.rows[lowerCell.rowNumber].noCellsLeft(lowerCell)) {
-        console.log("passed!");
+        //console.log("passed!");
         this.matched(c1, c2);
         return true;
       }
@@ -70,7 +70,7 @@ GameField.prototype.noCellsBetweenInColumn = function (c1, c2) {
     row2 = c1.rowNumber;
   }
   else {
-    console.log("addresses equal");
+    //console.log("addresses equal");
     //c1.print();
     //c2.print();
     return false;
@@ -104,7 +104,7 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
     column2 = c1.columnNumber;
   }
   else {
-    console.log("addresses equal");
+    //console.log("addresses equal");
     //c1.print();
     //c2.print();
     return false;
@@ -148,8 +148,8 @@ GameField.prototype.matched = function (c1, c2) {
     //console.log("reset c1");
   }
   if (this.rows[c2.rowNumber]) {
-    console.log(c2);
-    console.log(this.rows[c2.rowNumber]);
+    //console.log(c2);
+    //console.log(this.rows[c2.rowNumber]);
     if (this.rows[c2.rowNumber].isEmpty()) {
       //console.log("row " + c2.rowNumber + " empty");
       i = c2.rowNumber;
@@ -173,8 +173,8 @@ GameField.prototype.addMore = function () {
   r = this.rows.length-1;  // row number to start adding with
   start = this.rows[r].getStartingEmptyCell();  // cell number to start edding with
   numbers = this.getAllNumbers();
-  console.log(r);
-  console.log(start);
+  //console.log(r);
+  //console.log(start);
   
   if (numbers.length > 0) {
     // Fills the empty part of last row if needed
@@ -194,7 +194,7 @@ GameField.prototype.addMore = function () {
 GameField.prototype.fillRows = function (startRow, numbers) {
   var i, ar;
   
-  console.log("filling ", startRow);
+  //console.log("filling ", startRow);
   
   while (numbers.length > 0) {
     ar = [];
@@ -265,6 +265,7 @@ GameField.prototype.setUp = function () {
   r = new Row([1,5,1,6,1,7,1,8,1], 2);
   this.rows.push(r);
   r = new Row([9,0,0,0,0,0,0,0,0], 3);
+  this.rows.push(r);
 }
 
 //module.exports = GameField;

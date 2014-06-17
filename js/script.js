@@ -1,4 +1,4 @@
-var g, selectorFn, highScore = 0;
+var g, selectorFn, deselectorFn, highScore = 0;
 
 // Main script
 //  TODO add hint()
@@ -16,39 +16,52 @@ function start () {
   var selected = [];
   
   // Handles selecting & matching the cells
-  // TODO   deselect when clicked outside
   // TODO   mb deselect when unmatching cells selected
+  // TODO   when two unmatching selected & 3rd is clicked, deselect the first one, match two remaining
   // TODO   one day: make cool animation for cells disappearing (one day, one day)
   selectorFn = function() {
     var res, node = $(this);
     
     switch (selected.length) {
       case 0:
-        node.addClass('selected');
-        selected.push(node.attr('id'));
-        console.log("FIRST: " + selected);
+        if (node.text() !== "_") {
+          node.addClass('selected');
+          selected.push(node.attr('id'));
+          //console.log("FIRST: " + selected);
+        }
         break;
     
     // matches when the second cell is selected
       case 1:
-        node.addClass('selected');
-        selected.push(node.attr('id'));
-        console.log("Second: " + selected);
-        res = g.matchCells(selected[0], selected[1]); 
-        console.log(res);
-        if (res) {
-          paint();
+        if (node.text() !== "_") {
+          node.addClass('selected');
+          selected.push(node.attr('id'));
+          //console.log("Second: " + selected);
+          res = g.matchCells(selected[0], selected[1]); 
+          //console.log(res);
+          if (res) {
+            paint();
+          }
         }
         break;
     
       default:
         $('.selected').removeClass('selected');
-        node.addClass('selected');
-        selected = [node.attr('id')];
-        console.log("Emptied: " + selected);
+        if (node.text() !== "_") {
+          node.addClass('selected');
+          selected = [node.attr('id')];
+          //console.log("Emptied: " + selected);
+        }
         break;
       } 
     };
+  
+  deselectorFn = function() {
+    if(!$(event.target).is('.cell'))
+    {
+      $('.selected').removeClass('selected');
+    }
+  };
   
   g = new GameField();
   
@@ -104,7 +117,9 @@ function paint () {
     r += '</div>';
     $(".gameField").append(r);
   }
-  console.log("GameField repainted");
+  //console.log("GameField repainted");
+  
   $('.cell').click(selectorFn);
-  g.print();
+  $(document).click(deselectorFn);
+  //g.print();
 };

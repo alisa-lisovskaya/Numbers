@@ -42,9 +42,9 @@ Cell.prototype.sameColumn = function (c2) {
     return false;
   }
   else {
-    if (this.columnNumber === c2.columnNumber) {
-      console.log("same column!");
-    }
+    //if (this.columnNumber === c2.columnNumber) {
+      //console.log("same column!");
+    //}
     return this.columnNumber === c2.columnNumber;
   }
 }
@@ -55,9 +55,9 @@ Cell.prototype.sameRow = function (c2) {
     return false;
   }
   else {
-    if (this.rowNumber === c2.rowNumber) {
-      console.log("same row!");
-    }
+    //if (this.rowNumber === c2.rowNumber) {
+      //console.log("same row!");
+    //}
     return this.rowNumber === c2.rowNumber;
   }
 }

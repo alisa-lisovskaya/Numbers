@@ -36,10 +36,10 @@ Row.prototype.resetRowNumber = function () {
 Row.prototype.getStartingEmptyCell = function () {
   var i;
   
-  console.log("starting search");
+  //console.log("starting search");
   
   for (i = 8; i >= 0; i--) {
-    console.log("checking " + i);
+    //console.log("checking " + i);
     if (!this.cells[i].isEmpty()) { 
       return i+1;
     }
@@ -51,11 +51,11 @@ Row.prototype.getStartingEmptyCell = function () {
 Row.prototype.noCellsRight = function (c) {
   var i = c.columnNumber;
   
-  console.log("search right from " + i);
+  //console.log("search right from " + i);
   if (i === 8) { return true; }
   
   for (i++; i < 9; i++) {
-    console.log("Checking " + i);
+    //console.log("Checking " + i);
     if (!this.cells[i].isEmpty()) { 
       return false;
     }
@@ -67,11 +67,11 @@ Row.prototype.noCellsRight = function (c) {
 Row.prototype.noCellsLeft = function (c) {
   var i = c.columnNumber;
   
-  console.log("search left from " + i);
+  //console.log("search left from " + i);
   if (i === 0) { return true; }
   
   for (i--; i >= 0; i--) {
-    console.log("Checking " + i);
+    //console.log("Checking " + i);
     if (!this.cells[i].isEmpty()) { 
       return false;
     }
