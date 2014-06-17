@@ -16,6 +16,17 @@ Cell.prototype.empty = true;
 Cell.prototype.number = 0;
 Cell.prototype.pair = 0;
 
+// Returns a clone of the cell
+Cell.prototype.clone = function () {
+  var specObj = {};
+  
+  specObj.number = this.number;
+  specObj.rowNumber = this.rowNumber;
+  specObj.columnNumber = this.columnNumber;
+  
+  return new Cell(specObj);
+};
+
 // Checks if cell is empty
 Cell.prototype.isEmpty = function () {
   return this.empty;

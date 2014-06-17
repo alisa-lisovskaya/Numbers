@@ -1,11 +1,12 @@
-var g, selectorFn, deselectorFn, highScore = 0;
+var g, selectorFn, deselectorFn, highScore = 0, matched = [];
 
 // Main script
-//  TODO add hint()
+//  TODO  cool header with the title :)
+//  TODO  add hint()
 //  TODO  add cancel()
-//  TODO add severity levels
-//  TODO add redistribution()
-//  TODO add timePlayed()
+//  TODO  add severity levels
+//  TODO  add redistribution() <--- do we need it?
+//  TODO  add timePlayed()
 
 $(window).ready(function () {
   start();
@@ -40,6 +41,7 @@ function start () {
           res = g.matchCells(selected[0], selected[1]); 
           //console.log(res);
           if (res) {
+            matched = selected;
             paint();
           }
         }
@@ -80,6 +82,15 @@ function restart () {
 // Adds more numbers when no more moves possible
 function addMore () {
   g.addMore();
+  paint();
+};
+
+// Cancels the last move
+function cancel () {
+  //if (matched.length > 0) {
+    g.restore();
+    //g.restore(matched[1]);
+  //}
   paint();
 };
 

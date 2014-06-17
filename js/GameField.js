@@ -127,41 +127,36 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
 
 // Removes cells, removes & reindexates rows if empty
 GameField.prototype.matched = function (c1, c2) {
-  var i;
-  
   this.score += c1.number;
   this.score += c2.number;
+    
+  this.removedCells.push(c1.clone());
+  this.removedCells.push(c2.clone());
+  
   c1.remove();
   c2.remove();
   
   if (c1.rowNumber && this.rows[c1.rowNumber].isEmpty()) {
-    //console.log("row " + c1.rowNumber + " empty");
-    i = c1.rowNumber;
-    //console.log("resetting c1 " + i);
-    this.rows.splice(c1.rowNumber,1);
-    if (this.rows[i]) {
-      for (i; i < this.rows.length; i++) {
-        //console.log("resetting row " + i);
-        this.rows[i].resetRowNumber();
-      }
-    }
-    //console.log("reset c1");
+    this.reindexateRows(c1.rowNumber);
   }
   if (this.rows[c2.rowNumber]) {
-    //console.log(c2);
-    //console.log(this.rows[c2.rowNumber]);
     if (this.rows[c2.rowNumber].isEmpty()) {
-      //console.log("row " + c2.rowNumber + " empty");
-      i = c2.rowNumber;
-      //console.log("resetting c2 " + i);
-      this.rows.splice(c2.rowNumber,1);
-      if (this.rows[i]) {
-        for (i; i < this.rows.length; i++) {
-          //console.log("resetting row " + i);
-          this.rows[i].resetRowNumber();
-        }
-      }
-      //console.log("reset c2");
+      this.reindexateRows(c2.rowNumber);
+    }
+  }
+};
+
+// Removes the row with number r and reindexates all rows after it
+GameField.prototype.reindexateRows = function (r) {
+  var i = r;
+  
+  this.removedRows.push(r);
+  
+  this.rows.splice(r,1);
+  
+  if (this.rows[i]) {
+    for (i; i < this.rows.length; i++) {
+      this.rows[i].resetRowNumber();
     }
   }
 };
@@ -188,6 +183,29 @@ GameField.prototype.addMore = function () {
   
     this.fillRows(r, numbers);
   }
+};
+
+// Restores the last removed pair to the field
+GameField.prototype.restore = function () {
+  var c1, c2;
+  
+  console.log(this.removedCells);
+  console.log(this.removedRows);
+  
+  if (this.removedRows.length === 0) {
+    c1 = this.removedCells[0];
+    c2 = this.removedCells[1];
+    
+    this.rows[c1.rowNumber].cells[c1.columnNumber].number = c1.number;
+    this.rows[c2.rowNumber].cells[c2.columnNumber].number = c2.number;
+  }
+  else {
+    
+    
+    
+  }
+  this.removedCells = [];
+  this.removedRows = [];
 };
 
 // Pushes new rows with numbers from number array starting with startRow
@@ -248,6 +266,8 @@ GameField.prototype.setUp = function () {
   var r;
   
   this.rows = [];
+  this.removedCells = [];
+  this.removedRows = [];
   this.score = 0;
   
   r = new Row([1,2,3,4,5,6,7,8,9], 0);
@@ -258,13 +278,13 @@ GameField.prototype.setUp = function () {
   //this.rows.push(r);
   //r = new Row([0,0,1,0,0,0,0,0,0,0], 3);  // temp
   //this.rows.push(r);
-  //r = new Row([0,0,1,0,0,0,0,0,0,0], 4);  // temp
-  //this.rows.push(r);
+  r = new Row([0,0,1,0,0,0,9,0,0,0], 2);  // temp
+  this.rows.push(r);
   //r = new Row([1,6,1,7,1,8,1,9,0,0], 5);  // temp
   //this.rows.push(r);
-  r = new Row([1,5,1,6,1,7,1,8,1], 2);
+  r = new Row([1,5,1,6,1,7,1,8,1], 3);
   this.rows.push(r);
-  r = new Row([9,0,0,0,0,0,0,0,0], 3);
+  r = new Row([9,0,0,0,0,0,0,0,0], 4);
   this.rows.push(r);
 }
 
