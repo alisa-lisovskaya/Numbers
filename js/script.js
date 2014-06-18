@@ -7,6 +7,7 @@ var g, selectorFn, deselectorFn, startTime, highScore = 0;
 //  TODO  add severity levels
 //  TODO  handle winning --> when field is cleared; time must stop
 //  TODO  paint() should be in its own handler i guess
+//  TODO  pause() --> field should be blended
 
 $(window).ready(function () {
   start();
@@ -76,6 +77,7 @@ function start () {
     if(!$(event.target).is('.cell'))
     {
       $('.selected').removeClass('selected');
+      selected = [];  // everything's deselected so the array must be emptied
     }
   };
   
@@ -90,6 +92,7 @@ function restart () {
   if (g.getScore() > this.highScore) {
     this.highScore = g.getScore();
   }
+  startTime = new Date();
   start();
 };
 
