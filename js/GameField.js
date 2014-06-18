@@ -42,12 +42,7 @@ GameField.prototype.matchCells = function (id1, id2) {
         lowerCell = c1;
       }
       
-      //console.log("high = " + higherCell.rowNumber);
-      //console.log("low = " + lowerCell.rowNumber);
-      //console.log(higherCell.rowNumber === lowerCell.rowNumber-1);
-      
       if ((higherCell.rowNumber === lowerCell.rowNumber-1) && this.rows[higherCell.rowNumber].noCellsRight(higherCell) && this.rows[lowerCell.rowNumber].noCellsLeft(lowerCell)) {
-        //console.log("passed!");
         this.matched(c1, c2);
         return true;
       }
@@ -69,22 +64,15 @@ GameField.prototype.noCellsBetweenInColumn = function (c1, c2) {
     row1 = c2.rowNumber;
     row2 = c1.rowNumber;
   }
-  else {
-    //console.log("addresses equal");
-    //c1.print();
-    //c2.print();
-    return false;
-  }
+  else { return false; }
   
-  if (row1+1 === row2) {  // if neighbours
-    return true;
-  }
+  // if neighbours
+  if (row1+1 === row2) { return true; }
   
   else {
     for (i = row1+1; i < row2; i++) {
       if (!this.rows[i].cells[column].isEmpty()) { return false; }
       //console.log("Cell empty: ");
-      //this.rows[i].cells[column].print();
     }
   }
   return true;
@@ -103,22 +91,15 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
     column1 = c2.columnNumber;
     column2 = c1.columnNumber;
   }
-  else {
-    //console.log("addresses equal");
-    //c1.print();
-    //c2.print();
-    return false;
-  }
+  else { return false; }
   
-  if (column1+1 === column2) {  // if neighbours
-    return true;
-  }
+  // if neighbours
+  if (column1+1 === column2) { return true; }
   
   else {
     for (i = column1+1; i < column2; i++) {
       if (!this.rows[row].cells[i].isEmpty()) { return false; }
       //console.log("Cell empty: ");
-      //this.rows[row].cells[i].print();
     }
   }
   
@@ -145,7 +126,19 @@ GameField.prototype.matched = function (c1, c2) {
   if (this.rows[c2.rowNumber]) {
     if (this.rows[c2.rowNumber].isEmpty()) {
       this.reindexRowsDelete(c2.rowNumber);
-      move.row2 = c2.rowNumber;
+      // The rows must be in ascending order!
+      if (move.row1) {
+        if (move.row1 > c2.rowNumber) {
+          move.row2 = move.row1;
+          move.row1 = c2.rowNumber;
+        }
+        else {
+          move.row2 = c2.rowNumber;
+        }
+      }
+      else {
+        move.row1 = c2.rowNumber;
+      }
     }
   }
   
@@ -169,8 +162,10 @@ GameField.prototype.reindexRowsDelete = function (r) {
 GameField.prototype.reindexRowsInsert = function (r) {
   var i = r;
   
+  console.log("Inserting after row " + r);
   if (this.rows[i]) {
     for (i; i < this.rows.length; i++) {
+      console.log("incrementing " + i);
       this.rows[i].rowNumberIncrement();
     }
   }
@@ -183,14 +178,11 @@ GameField.prototype.addMore = function () {
   r = this.rows.length-1;  // row number to start adding with
   start = this.rows[r].getStartingEmptyCell();  // cell number to start edding with
   numbers = this.getAllNumbers();
-  //console.log(r);
-  //console.log(start);
   
   if (numbers.length > 0) {
     // Fills the empty part of last row if needed
     while (start < 9) {
       this.rows[r].cells[start].number = numbers.shift();
-      //this.rows[r].cells[start].empty = false;
       start++;
     }
   
@@ -198,13 +190,15 @@ GameField.prototype.addMore = function () {
   
     this.fillRows(r, numbers);
   }
+  
+  this.memory = [];
 };
 
 // Restores the last removed pair to the field
 GameField.prototype.restore = function () {
   var move, c1, c2;
   
-  //console.log(JSON.stringify(this.memory));
+  console.log(JSON.stringify(this.memory));
   
   if (this.memory.length > 0) {
     move = this.memory.pop();
@@ -293,16 +287,10 @@ GameField.prototype.setUp = function () {
   this.rows.push(r);
   r = new Row([1,1,1,1,2,1,3,1,4], 1);
   this.rows.push(r);
-  //r = new Row([1,1,1,1,1,3,7,6,4,9], 2);  // temp
-  //this.rows.push(r);
-  //r = new Row([0,0,1,0,0,0,0,0,0,0], 3);  // temp
-  //this.rows.push(r);
-  r = new Row([0,0,1,0,0,0,9,0,0], 2);  // temp
+  r = new Row([0,0,9,0,0,0,1,0,0], 2);  // temp
   this.rows.push(r);
   r = new Row([0,0,1,0,0,0,9,0,0], 3);  // temp
   this.rows.push(r);
-  //r = new Row([1,6,1,7,1,8,1,9,0,0], 5);  // temp
-  //this.rows.push(r);
   r = new Row([1,5,1,6,1,7,1,8,1], 4);
   this.rows.push(r);
   r = new Row([9,0,0,0,0,0,0,0,0], 5);

@@ -27,7 +27,7 @@ function start () {
         if (node.text() !== "_") {      // we only select non-empty cells
           node.addClass('selected');
           selected.push(node.attr('id'));
-          //console.log("FIRST: " + selected);
+          console.log("FIRST: " + selected);
         }
         break;
     
@@ -36,9 +36,13 @@ function start () {
         if (node.text() !== "_") {
           node.addClass('selected');
           selected.push(node.attr('id'));
-          //console.log("Second: " + selected);
+          console.log("Second: " + selected);
           res = g.matchCells(selected[0], selected[1]); 
           if (res) {
+            // deselect all
+            $('.selected').removeClass('selected');
+            selected = [];
+            console.log("deselected");
             paint();
           }
         }
@@ -53,11 +57,14 @@ function start () {
           // add new element
           node.addClass('selected');
           selected.push(node.attr('id'));
+          
+          console.log("Another Second: " + selected);
           g.matchCells(selected[0], selected[1]); 
           
           // deselect all
           $('.selected').removeClass('selected');
           selected = [];
+          console.log("deselected");
           paint();
         }
         break;
@@ -133,7 +140,7 @@ function paint () {
     r += '</div>';
     $(".gameField").append(r);
   }
-  //console.log("GameField repainted");
+  console.log("GameField repainted");
   
   $('.cell').click(selectorFn);
   $(document).click(deselectorFn);
