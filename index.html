@@ -7,16 +7,22 @@
     <script type="text/javascript" src="js/Row.js"></script>
     <script type="text/javascript" src="js/GameField.js"></script>
   </head>
-  <body>
+  <body onload="playingTime()">
     <div class="container">
       <div class="ruleField"></div>
+      <div class="timeField">
+        <div>
+          <div>Time well spent</div>
+          <div id="timer"></div>
+        </div>
+      </div>
       <div class="scoreField">
         <div>
-          <div> Awesum score</div>
+          <div>Awesum score</div>
           <div id="score"></div>
         </div>
         <div>
-          <div> Awesumest score</div>
+          <div>Awesumest score</div>
           <div id="highScore"></div>
         </div>
       </div>

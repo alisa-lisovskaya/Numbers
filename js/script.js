@@ -1,11 +1,12 @@
-var g, selectorFn, deselectorFn, highScore = 0;
+var g, selectorFn, deselectorFn, startTime, highScore = 0;
 
 // Main script
 //  TODO  cool header with the title :)
 //  TODO  make numbers out of pictures
 //  TODO  add hint()
 //  TODO  add severity levels
-//  TODO  add timePlayed() : http://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
+//  TODO  handle winning --> when field is cleared; time must stop
+//  TODO  paint() should be in its own handler i guess
 
 $(window).ready(function () {
   start();
@@ -27,7 +28,7 @@ function start () {
         if (node.text() !== "_") {      // we only select non-empty cells
           node.addClass('selected');
           selected.push(node.attr('id'));
-          console.log("FIRST: " + selected);
+          //console.log("FIRST: " + selected);
         }
         break;
     
@@ -36,13 +37,13 @@ function start () {
         if (node.text() !== "_") {
           node.addClass('selected');
           selected.push(node.attr('id'));
-          console.log("Second: " + selected);
+          //console.log("Second: " + selected);
           res = g.matchCells(selected[0], selected[1]); 
           if (res) {
             // deselect all
             $('.selected').removeClass('selected');
             selected = [];
-            console.log("deselected");
+            //console.log("deselected");
             paint();
           }
         }
@@ -58,13 +59,13 @@ function start () {
           node.addClass('selected');
           selected.push(node.attr('id'));
           
-          console.log("Another Second: " + selected);
+          //console.log("Another Second: " + selected);
           g.matchCells(selected[0], selected[1]); 
           
           // deselect all
           $('.selected').removeClass('selected');
           selected = [];
-          console.log("deselected");
+          //console.log("deselected");
           paint();
         }
         break;
@@ -123,6 +124,41 @@ function closeRules () {
   $('.ruleField').empty();
 };
 
+// Gets the timer
+function playingTime() {
+  var today, t, time, ms;
+  
+  if (!startTime) { startTime = new Date() };   // get start time
+  
+  today = new Date();
+  
+  ms = today.getTime() - startTime.getTime();
+  time = msToTime(ms);
+  
+  $("#timer").empty();
+  $("#timer").append(time);
+  
+  t = setTimeout(function(){ playingTime() }, 500);
+}
+
+// Converts milliseconds to time
+function msToTime (t) {
+  var ms, s, m, h;
+  
+  function addZ (n) {
+    return (n<10? '0':'') + n;
+  }
+
+  ms = t % 1000;
+  t = (t - ms) / 1000;
+  s = t % 60;
+  t = (t - s) / 60;
+  m = t % 60;
+  h = (t - m) / 60;
+
+  return addZ(h) + ':' + addZ(m) + ':' + addZ(s);
+}
+
 // Adds field contents to the page in a proper manner
 function paint () {
   $(".gameField").empty();
@@ -140,7 +176,7 @@ function paint () {
     r += '</div>';
     $(".gameField").append(r);
   }
-  console.log("GameField repainted");
+  //console.log("GameField repainted");
   
   $('.cell').click(selectorFn);
   $(document).click(deselectorFn);
