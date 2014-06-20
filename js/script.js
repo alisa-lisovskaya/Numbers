@@ -3,6 +3,7 @@ var g, selectorFn, deselectorFn, startTime, highScore = 0;
 // Main script
 //  TODO  cool header with the title :)
 //  TODO  make numbers out of pictures
+//  TODO  make the button field fixed so that one nedn't scroll if the field's too long
 //  TODO  add hint()
 //  TODO  add severity levels
 //  TODO  handle winning --> when field is cleared; time must stop

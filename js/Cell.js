@@ -3,9 +3,6 @@ var Cell;
 Cell = function (specObj) {
   if (specObj) {
     this.number = specObj.number;
-    if (specObj.number != 0) {
-      this.pair = 10 - this.number;
-    }
     this.rowNumber = specObj.rowNumber;
     this.columnNumber = specObj.columnNumber;
   }
@@ -29,7 +26,7 @@ Cell.prototype.isEmpty = function () {
 
 // Prints Cell contents on console
 Cell.prototype.print = function () {
-  console.log(this.rowNumber + ', ' + this.columnNumber + ': ' + this.number + " / " + this.pair + " = " + this.isEmpty());
+  console.log(this.rowNumber + ', ' + this.columnNumber + ': ' + this.number + " = " + this.isEmpty());
 };
 
 // Matches the cell to the parameter number-wise
@@ -39,7 +36,7 @@ Cell.prototype.matches = function (c2) {
     return false;
   }
   else {
-    return (this.number === c2.number) || (this.number === c2.pair) || (this.pair === c2.number);
+    return (this.number === c2.number) || (this.number + c2.number === 10);
   }
 }
 
@@ -78,7 +75,6 @@ Cell.prototype.getNumber = function () {
 // Removes cell making it appear empty
 Cell.prototype.remove = function () {
   this.number = 0;
-  this.pair = 0;
   return this;
 };
 

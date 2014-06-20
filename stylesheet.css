@@ -19,14 +19,12 @@ body {
   padding: 10px;
   text-align: center;
 }
-  
 
 .gameField, .buttonField {
   display: flex;
   align-content: flex-start;
   flex-direction: column;
 }
-
 
 .row {
   display: block;

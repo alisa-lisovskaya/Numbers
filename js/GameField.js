@@ -108,7 +108,7 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
 
 // Removes cells, removes & reindexates rows if empty
 GameField.prototype.matched = function (c1, c2) {
-  var move = {};
+  var rowUp, rowDown, move = {};
   
   this.score += c1.number;
   this.score += c2.number;
@@ -119,27 +119,23 @@ GameField.prototype.matched = function (c1, c2) {
   c1.remove();
   c2.remove();
   
-  if (c1.rowNumber && this.rows[c1.rowNumber].isEmpty()) {
-    this.reindexRowsDelete(c1.rowNumber);
-    move.row1 = c1.rowNumber;
+  if (c1.rowNumber > c2.rowNumber) {
+    rowDown = c1.rowNumber;
+    rowUp = c2.rowNumber;
   }
-  if (this.rows[c2.rowNumber]) {
-    if (this.rows[c2.rowNumber].isEmpty()) {
-      this.reindexRowsDelete(c2.rowNumber);
-      // The rows must be in ascending order!
-      if (move.row1) {
-        if (move.row1 > c2.rowNumber) {
-          move.row2 = move.row1;
-          move.row1 = c2.rowNumber;
-        }
-        else {
-          move.row2 = c2.rowNumber;
-        }
-      }
-      else {
-        move.row1 = c2.rowNumber;
-      }
-    }
+  else {
+    rowDown = c2.rowNumber;
+    rowUp = c1.rowNumber;
+  }
+  
+  // First we delete the lower row so that row numbers are not changed
+  if (this.rows[rowDown].isEmpty()) {
+    this.reindexRowsDelete(rowDown);
+    move.rowDown = rowDown;
+  }
+  if (this.rows[rowUp].isEmpty()) {
+    this.reindexRowsDelete(rowUp);
+    move.rowUp = rowUp;
   }
   
   this.memory.push(move);
@@ -151,8 +147,11 @@ GameField.prototype.reindexRowsDelete = function (r) {
   
   this.rows.splice(r,1);
   
+  console.log("Deleting row " + r);
+  
   if (this.rows[i]) {
     for (i; i < this.rows.length; i++) {
+      console.log("decrementing " + i);
       this.rows[i].rowNumberDecrement();
     }
   }
@@ -195,6 +194,7 @@ GameField.prototype.addMore = function () {
 };
 
 // Restores the last removed pair to the field
+// TODO   this should be tested better, something is wrong
 GameField.prototype.restore = function () {
   var move, c1, c2;
   
@@ -207,13 +207,13 @@ GameField.prototype.restore = function () {
     c2 = move.cell2;
     
     // if rows have been deleted, they need to be restored
-    if (move.row1) {
-      this.reindexRowsInsert(move.row1);
-      this.rows.splice(move.row1, 0, new Row ([], move.row1));
+    if (move.rowUp) {
+      this.reindexRowsInsert(move.rowUp);
+      this.rows.splice(move.rowUp, 0, new Row ([], move.rowUp));
     }
-    if (move.row2) {
-      this.reindexRowsInsert(move.row2);
-      this.rows.splice(move.row2, 0, new Row ([], move.row2));
+    if (move.rowDown) {
+      this.reindexRowsInsert(move.rowDown);
+      this.rows.splice(move.rowDown, 0, new Row ([], move.rowDown));
     }
     
     // now cells can be restored in the rows they've been in
@@ -282,6 +282,11 @@ GameField.prototype.setUp = function () {
   this.rows = [];
   this.memory = [];
   this.score = 0;
+  
+  /*r = new Row([0,0,9,0,0,0,1,0,0], 0);
+  this.rows.push(r);
+  r = new Row([0,0,9,0,0,0,1,0,0], 1);
+  this.rows.push(r);*/
   
   r = new Row([1,2,3,4,5,6,7,8,9], 0);
   this.rows.push(r);
