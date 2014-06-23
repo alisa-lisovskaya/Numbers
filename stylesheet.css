@@ -7,11 +7,11 @@ body {
   display: flex;
   flex-direction: column;
   align-content: flex-start;
-  width: 450px;
+  width: 550px;
   margin-left: 40%;
 }
 
-.timeField, .actionField, .scoreField {
+.timeField, .actionField, .scoreField, .countField {
   display: flex;
   flex-direction: row;
   align-content: space-between;
@@ -42,10 +42,10 @@ body {
   outline: none;
   cursor: pointer;
   border: 1px black solid;
-  font-size: 14pt;
+  font-size: 18pt;
   text-align: center;
   text-transform: uppercase;
-  width: 20px;
+  width: 30px;
   margin: 1px;
 }
 
@@ -53,7 +53,7 @@ body {
   background-color: #FFFF99
 }
 
-#score, #highScore, #timer {;
+#score, #highScore, #timer, #rowCount, #cellCount {;
   width: 150px;
   border: 1px solid black;
   text-align: right;

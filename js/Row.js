@@ -20,6 +20,19 @@ Row = function (numbers, r) {
   }
 };
 
+// Returns the number of non-empty cells in the row
+Row.prototype.cellCount = function () {
+  var i, n = 0;
+  
+  //console.log("counting cells");
+  
+  for (i = 0; i < 9; i++) {
+    if (!this.cells[i].isEmpty()) { n++; }
+  }
+  
+  return n;
+};
+
 // Checks if row is empty
 Row.prototype.isEmpty = function () {
   var i;

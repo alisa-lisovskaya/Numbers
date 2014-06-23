@@ -1,7 +1,6 @@
 var GameField;
 
 /*  TODO  hint()  <--- how should the possible moves be stored
-    TODO  score() <--- make score awesumer, with blinking flashing lights, music, and confetti
     TODO  highScore() <--- save in localStorage unless this is not considered nice
   */
 
@@ -10,6 +9,22 @@ GameField = function () {
 };
 
 GameField.prototype.score = 0;
+
+// Updates row count, oddly enough
+GameField.prototype.updateRowCount = function () {
+  this.rowCount = this.rows.length;
+};
+
+// Updates cell count, oddly enough
+GameField.prototype.updateCellCount = function () {
+  var i;
+  // console.log("updating cells");
+  this.cellCount = 0;
+  
+  for (i in this.rows) {
+    this.cellCount += this.rows[i].cellCount();
+  }
+};
 
 // Gets cell by id with row:column
 GameField.prototype.getCell = function (id) {
@@ -138,6 +153,8 @@ GameField.prototype.matched = function (c1, c2) {
     move.rowUp = rowUp;
   }
   
+  this.updateRowCount();
+  this.updateCellCount();
   this.memory.push(move);
 };
 
@@ -171,6 +188,7 @@ GameField.prototype.reindexRowsInsert = function (r) {
 };
 
 // Adds more numbers
+//  TODO    if first cell to be filled was cleared before, it must not be filled (cf. paper version!)
 GameField.prototype.addMore = function () {
   var r, i, j, start, numbers;
   
@@ -190,6 +208,8 @@ GameField.prototype.addMore = function () {
     this.fillRows(r, numbers);
   }
   
+  this.updateRowCount();
+  this.updateCellCount();
   this.memory = [];
 };
 
@@ -220,6 +240,9 @@ GameField.prototype.restore = function () {
     this.rows[c1.rowNumber].cells[c1.columnNumber] = c1;
     this.rows[c2.rowNumber].cells[c2.columnNumber] = c2;
   }
+  
+  this.updateRowCount();
+  this.updateCellCount();
 };
 
 // Pushes new rows with numbers from number array starting with startRow
@@ -264,6 +287,17 @@ GameField.prototype.getScore = function () {
   return this.score;
 };
 
+// Returns current row count
+GameField.prototype.getRowCount = function () {
+  return this.rowCount;
+};
+
+// Returns current cell count
+GameField.prototype.getCellCount = function () {
+  return this.cellCount;
+};
+
+
 // Prints the gamefield contents on the console
 GameField.prototype.print = function () {
   var i, j;
@@ -300,6 +334,9 @@ GameField.prototype.setUp = function () {
   this.rows.push(r);
   r = new Row([9,0,0,0,0,0,0,0,0], 5);
   this.rows.push(r);
+  
+  this.updateRowCount();
+  this.updateCellCount();
 }
 
 //module.exports = GameField;

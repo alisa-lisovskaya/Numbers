@@ -9,6 +9,9 @@ var g, selectorFn, deselectorFn, startTime, highScore = 0;
 //  TODO  handle winning --> when field is cleared; time must stop
 //  TODO  paint() should be in its own handler i guess
 //  TODO  pause() --> field should be blended
+//  TODO  score() <--- make score awesumer, with blinking flashing lights, music, and confetti
+//  TODO  harder level with only n + m = 10
+//  TODO  every n minutes, pause should be forced
 
 $(window).ready(function () {
   start();
@@ -168,9 +171,13 @@ function paint () {
   $(".gameField").empty();
   $("#score").empty();
   $("#highScore").empty();
+  $("#rowCount").empty();
+  $("#cellCount").empty();
   
   $("#score").append(g.getScore());
   $("#highScore").append(this.highScore);
+  $("#rowCount").append(g.getRowCount());
+  $("#cellCount").append(g.getCellCount());
   
   for (i in g.rows) {
     r = '<div class = "row">';
