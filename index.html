@@ -10,35 +10,31 @@
   <body onload="playingTime()">
     <div class="container">
       <div class="ruleField"></div>
-      <div class="timeField">
-        <div>
-          <div class="header">Time well spent</div>
-          <div id="timer"></div>
+      <div class="actionField">
+        <div class="sidebar">
+        <div class="timeField">
+          <div>
+            <div class="header">Time well spent</div>
+            <div id="timer"></div>
+          </div>
         </div>
-      </div>
-      <div class="scoreField">
-        <div>
-          <div class="header">Awesum score</div>
-          <div id="score"></div>
+        <div class="scoreField">
+          <div>
+            <div class="header">Score</div>
+            <div id="score"></div>
+          </div>
+          <div>
+            <div class="header">High score</div>
+            <div id="highScore"></div>
+          </div>
         </div>
-        <div>
-          <div class="header">Awesumest score</div>
-          <div id="highScore"></div>
-        </div>
-      </div>
-       <div class="countField">
-        <div>
-          <div class="header">Row count</div>
+         <div class="countField">
           <div id="rowCount"></div>
-        </div>
-        <div>
-          <div class="header">Cell count</div>
           <div id="cellCount"></div>
         </div>
       </div>
-      <div class="actionField">
         <div class="gameField"></div>
-        <div class="buttonField">
+        <div class="buttonField sidebar">
           <button onclick="cancel()">Cancel</button>
           <button onclick="addMore()">Add more</button>
           <button onclick="restart()">New Game</button>

@@ -3,7 +3,6 @@ var g, selectorFn, deselectorFn, startTime, highScore = 0;
 // Main script
 //  TODO  cool header with the title :)
 //  TODO  make numbers out of pictures
-//  TODO  make the button field fixed so that one nedn't scroll if the field's too long
 //  TODO  add hint()
 //  TODO  add severity levels
 //  TODO  handle winning --> when field is cleared; time must stop
@@ -15,6 +14,27 @@ var g, selectorFn, deselectorFn, startTime, highScore = 0;
 
 $(window).ready(function () {
   start();
+});
+
+// Animates sticky sidebar when page scrolled
+//    beware that it is still fixed positioning & may end up with sidebar being unreachable
+//    if the height of the screen is smaller than the height of the sidebar
+$(function() {
+  var $sidebar    = $(".sidebar"),  
+      $window     = $(window),
+      offsetSB    = $sidebar.offset(),
+      topPadding  = 15;
+
+  $window.scroll(function() {
+    if ($window.scrollTop() > offsetSB.top) {
+        $sidebar.stop().animate({
+        marginTop: $window.scrollTop() - offsetSB.top + topPadding
+      });
+    }
+    else {
+      $sidebar.stop().animate({ marginTop: 0 });
+    }
+  });
 });
 
 // Starts the game
@@ -177,7 +197,9 @@ function paint () {
   $("#score").append(g.getScore());
   $("#highScore").append(this.highScore);
   $("#rowCount").append(g.getRowCount());
+  $("#rowCount").append(" rows");
   $("#cellCount").append(g.getCellCount());
+  $("#cellCount").append(" cells");
   
   for (i in g.rows) {
     r = '<div class = "row">';
