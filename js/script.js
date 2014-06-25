@@ -23,7 +23,7 @@ $(function() {
   var $sidebar    = $(".sidebar"),  
       $window     = $(window),
       offsetSB    = $sidebar.offset(),
-      topPadding  = 15;
+      topPadding  = 85;
 
   $window.scroll(function() {
     if ($window.scrollTop() > offsetSB.top) {
@@ -162,8 +162,8 @@ function playingTime() {
   ms = today.getTime() - startTime.getTime();
   time = msToTime(ms);
   
-  $("#timer").empty();
-  $("#timer").append(time);
+  // $("#timer").empty();
+  // $("#timer").append(time);
   
   t = setTimeout(function(){ playingTime() }, 500);
 }

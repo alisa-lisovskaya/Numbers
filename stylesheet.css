@@ -1,6 +1,8 @@
 body {
-  font-family: Otto, Verdana, sans-serif;
-  font-size: 28pt;
+  font-family: Quikhand, Verdana, sans-serif;
+  font-size: 18pt;
+  /*font-size: 28pt;*/
+
   background-image:url('img/tetrad.jpg');
 }
 
@@ -9,20 +11,38 @@ body {
   src: url(font/Otto/Otto.ttf);
 }
 
+@font-face {
+  font-family: WCManoNegraBta;
+  src: url(font/WCManoNegraBta.ttf);
+}
+
+@font-face {
+  font-family: Quikhand;
+  src: url(font/quikhand/Quikhand.ttf);
+}
+
+@font-face {
+  font-family: doves;
+  src: url(font/two-turtle-doves/doves.ttf);
+}
+
 #titleHeader {
-  font-size: 40pt;
+  font-size: 24pt;
+  /*font-size: 40pt;*/
   text-align: center;
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  /*border: 1px solid black;*/
+  /*border-radius: 10px;*/
+  /*background-color: white;*/
 }
 
 .container {
   display: flex;
   flex-direction: column;
   align-content: flex-start;
-  width: 40%;
-  margin-left: 30%;
+  width: 30%;
+  margin-left: 35%;
 }
 
 /* 
@@ -30,6 +50,7 @@ body {
   - see where classes can become ids (and read if it is necessary (i think it is))
   - current background is not seamless, find a seamless one
   - font http://www.1001fonts.com/otto-font.html
+  - http://www.1001fonts.com/brownbaglunch-font.html
   - find better suiting backup fonts
   - why does the buttonField need font-family & size defined additionaly?
 */
@@ -56,7 +77,7 @@ body {
 }
 
 .gameField {
-  width: 328px;
+  min-width: 328px;
 }
 
 .row {
@@ -80,10 +101,13 @@ body {
   text-transform: uppercase;
   width: 30px;
   margin: 1px;
+  border: 1px solid transparent;
 }
 
 .cell.selected {
-  background-color: #FFFF99
+  /*background-color: #FFFF99*/
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
 .header {
@@ -121,8 +145,9 @@ body {
 }
 
 button {
-  font-family: Otto;
-  font-size: 28pt;
+  font-family: Quikhand;
+  font-size: 18pt;
+  /*font-size: 28pt;*/
   width: 150px;
   height: 40px;
   border: 1px solid black;
