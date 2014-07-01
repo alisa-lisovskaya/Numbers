@@ -1,19 +1,7 @@
 body {
   font-family: Quikhand, Verdana, sans-serif;
   font-size: 18pt;
-  /*font-size: 28pt;*/
-
-  background-image:url('img/tetrad.jpg');
-}
-
-@font-face {
-  font-family: Otto;
-  src: url(font/Otto/Otto.ttf);
-}
-
-@font-face {
-  font-family: WCManoNegraBta;
-  src: url(font/WCManoNegraBta.ttf);
+  background-image:url('img/back.jpg');
 }
 
 @font-face {
@@ -21,28 +9,22 @@ body {
   src: url(font/quikhand/Quikhand.ttf);
 }
 
-@font-face {
-  font-family: doves;
-  src: url(font/two-turtle-doves/doves.ttf);
+div {
+  /*border: 1px solid black;*/
 }
 
-#titleHeader {
+#header {
   font-size: 24pt;
-  /*font-size: 40pt;*/
   text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
-  /*border: 1px solid black;*/
-  /*border-radius: 10px;*/
-  /*background-color: white;*/
 }
 
-.container {
+#container {
   display: flex;
   flex-direction: column;
-  align-content: flex-start;
-  width: 30%;
-  margin-left: 35%;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 
@@ -53,31 +35,40 @@ body {
   - http://www.1001fonts.com/brownbaglunch-font.html
   - find better suiting backup fonts
   - why does the buttonField need font-family & size defined additionaly?
+  - ask Morgan to draw grid & borders for score & rules & selection circle
 */
 
-.timeField, .actionField, .scoreField, .countField {
+#actionField {
   display: flex;
   flex-direction: row;
-  align-content: space-between;
-  justify-content: space-between;
-  padding: 10px;
-  text-align: center;
-}
-
-.timeField {
-  align-content: center;
   justify-content: center;
 }
 
-.gameField, .buttonField {
+#gameField, .sidebar {
   display: flex;
-  align-content: flex-start;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   padding: 10px;
 }
 
-.gameField {
+#gameField {
   min-width: 328px;
+}
+
+#scoreField {
+  width: 150px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#score, #highscore {
+  margin-top: 5px;
+}
+
+.header {
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .row {
@@ -110,36 +101,20 @@ body {
   border-radius: 10px;
 }
 
-.header {
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-#score, #highScore, #timer, #rowCount, #cellCount {;
-  width: 150px;
-  /*border: 1px solid black;*/
-  text-align: center;
-  margin: 5 5 0 0px;
-}
-
 #rules {
-  /*border: none;*/
-  border: 1px solid black;
+  /*border: 1px solid black;
   border-radius: 10px;
   background-color: white;
-  /*background-color: #F5DFE6;*/
-  outline: none;
+  outline: none;*/
   padding: 15px;
-  margin: 10px;
-  /*box-shadow: 3px 3px #FFC0CB;*/
+  width: 400px;
+  /*margin-bottom: 20px;*/
 }
 
 #clearRules {
+  visibility: hidden;
   float: right;
-  /*font-size: 10pt;*/
-  /*color: #FFF0F5;*/
   font-weight: bold;
-  /*text-shadow: 3px 3px #FFC0CB;*/
   cursor: pointer;
   outline: none;
 }
@@ -147,15 +122,12 @@ body {
 button {
   font-family: Quikhand;
   font-size: 18pt;
-  /*font-size: 28pt;*/
   width: 150px;
   height: 40px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   background-color: white;
-  /*border: none;*/
   border-radius: 10px;
   text-transform: uppercase;
-  /*background-color: #FFF0F5;*/
   outline: none;
   cursor: pointer;
   margin: 0 5 5 5px;

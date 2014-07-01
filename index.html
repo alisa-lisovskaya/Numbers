@@ -8,41 +8,32 @@
     <script type="text/javascript" src="js/GameField.js"></script>
   </head>
   <body onload="playingTime()">
-    <div class="container">
-      <div id="titleHeader">I'm proud to be a part of this number.</div>
-      <div class="actionField">
+    <div id="container">
+      <div id="header">I'm proud to be a part of this number.</div>
+      <div id="ruleField"></div>
+      <div id="actionField">
         <div class="sidebar">
-          <!--div class="timeField">
+          <div id="scoreField">
             <div>
-              <div class="header">Time well spent</div>
-              <div id="timer"></div>
+              <div class="header">Best</div>
+              <div id="highScore"></div>
             </div>
-          </div-->
-          <div class="scoreField">
+          </div>
+          <button onclick="restart()">New Game</button>
+        </div>
+        <div id="gameField"></div>
+        <div class="sidebar">
+          <div id="scoreField">
             <div>
               <div class="header">Score</div>
               <div id="score"></div>
             </div>
-            <!--div>
-              <div class="header">High score</div>
-              <div id="highScore"></div>
-            </div-->
           </div>
-          <!--div class="countField">
-            <div id="rowCount"></div>
-            <div id="cellCount"></div>
-          </div-->
-        </div>
-        <div class="gameField"></div>
-        <div class="buttonField sidebar">
           <button onclick="cancel()">Cancel</button>
           <button onclick="addMore()">Add more</button>
-          <button onclick="restart()">New Game</button>
-          <!--button onclick="hint()">Hint</button-->
-          <button onclick="showRules()">Rules</button>
-        </div>  
+        </div>
       </div>
-      <div class="ruleField"></div>
+      
     </div>
   </body>
 </html>

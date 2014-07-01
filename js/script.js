@@ -1,6 +1,7 @@
-var g, selectorFn, deselectorFn, startTime, highScore = 0;
+var g, selectorFn, deselectorFn, startTime, highScore;
 
 // Main script
+//  TODO  keyboard handling!
 //  TODO  cool header with the title :)
 //  TODO  make numbers out of pictures
 //  TODO  add hint()
@@ -13,6 +14,11 @@ var g, selectorFn, deselectorFn, startTime, highScore = 0;
 //  TODO  every n minutes, pause should be forced
 
 $(window).ready(function () {
+  
+  if(typeof(Storage) !== "undefined") {
+    highScore = localStorage.getItem("highScore") || 0;
+  }
+  
   start();
 });
 
@@ -106,7 +112,7 @@ function start () {
   };
   
   g = new GameField();
-  
+
   paint();
   showRules();  // TODO   rules should not reappear on restart if they were closed
 };
@@ -115,6 +121,7 @@ function start () {
 function restart () {
   if (g.getScore() > this.highScore) {
     this.highScore = g.getScore();
+    localStorage.setItem("highScore", this.highScore);
   }
   startTime = new Date();
   start();
@@ -141,14 +148,14 @@ function hint () {
 
 // Shows the rules
 function showRules () {
-  var r = "<div id='rules'><div id='clearRules' onclick='closeRules()'>X</div><strong>Rules</strong><br><br>This game has no rules.<br>I'm proud to be a part of this number.</div>";
-  $('.ruleField').empty();
-  $('.ruleField').append(r);
+  var r = "<div id='rules'><div id='clearRules' onclick='closeRules()'>X</div>Delete a pair of numbers if: <ol><li>they are equal or sum up to 10,</li><li>they are in the same row or column, and</li><li>there is no other number between them</li></ol></div>";
+  $('#ruleField').empty();
+  $('#ruleField').append(r);
 };
 
 // Removes the rules
 function closeRules () {
-  $('.ruleField').empty();
+  $('#ruleField').empty();
 };
 
 // Gets the timer
@@ -188,18 +195,19 @@ function msToTime (t) {
 
 // Adds field contents to the page in a proper manner
 function paint () {
-  $(".gameField").empty();
+  $("#gameField").empty();
   $("#score").empty();
   $("#highScore").empty();
-  $("#rowCount").empty();
-  $("#cellCount").empty();
+  /*$("#rowCount").empty();
+  $("#cellCount").empty();*/
   
+  console.log(this.highScore);
   $("#score").append(g.getScore());
   $("#highScore").append(this.highScore);
-  $("#rowCount").append(g.getRowCount());
+  /*$("#rowCount").append(g.getRowCount());
   $("#rowCount").append(" rows");
   $("#cellCount").append(g.getCellCount());
-  $("#cellCount").append(" cells");
+  $("#cellCount").append(" cells");*/
   
   for (i in g.rows) {
     r = '<div class = "row">';
@@ -207,7 +215,7 @@ function paint () {
       r += '<div class = "cell" id="' + i + ':' + j +'">' + g.rows[i].cells[j].getNumber() + '</div>';
     }
     r += '</div>';
-    $(".gameField").append(r);
+    $("#gameField").append(r);
   }
   //console.log("GameField repainted");
   
