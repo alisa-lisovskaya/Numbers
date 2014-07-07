@@ -1,17 +1,13 @@
-var g, selectorFn, deselectorFn, startTime, highScore;
+var g, selectorFn, deselectorFn, startTime, highScore,
+    topPadding = $('.header').height() + $('.ruleField').height();
 
 // Main script
-//  TODO  keyboard handling!
-//  TODO  cool header with the title :)
-//  TODO  make numbers out of pictures
-//  TODO  add hint()
-//  TODO  add severity levels
-//  TODO  handle winning --> when field is cleared; time must stop
+//  TODO  keyboard controls!
+//  TODO  handle winning --> when field is cleared, something must happen
 //  TODO  paint() should be in its own handler i guess
-//  TODO  pause() --> field should be blended
-//  TODO  score() <--- make score awesumer, with blinking flashing lights, music, and confetti
-//  TODO  harder level with only n + m = 10
-//  TODO  every n minutes, pause should be forced
+//  NOTE  score doesn't really make sense
+//  NOTE  when new game started, scroll position must be reset
+//  TODO  browser compatibility --> e.g. Safari doesn't support flex or what?
 
 $(window).ready(function () {
   
@@ -24,97 +20,64 @@ $(window).ready(function () {
 
 // Animates sticky sidebar when page scrolled
 //    beware that it is still fixed positioning & may end up with sidebar being unreachable
-//    if the height of the screen is smaller than the height of the sidebar
 $(function() {
-  var $sidebar    = $(".sidebar"),  
-      $window     = $(window),
-      offsetSB    = $sidebar.offset(),
-      topPadding  = 85;
+  var sidebar = $(".sidebar"),  
+      windowObject = $(window),
+      offset = sidebar.offset();
 
-  $window.scroll(function() {
-    if ($window.scrollTop() > offsetSB.top) {
-        $sidebar.stop().animate({
-        marginTop: $window.scrollTop() - offsetSB.top + topPadding
-      });
+  windowObject.scroll(function() {
+    if (windowObject.scrollTop() > offset.top) {
+        sidebar.stop().animate({
+        marginTop: windowObject.scrollTop() - offset.top + topPadding + 200
+      }, 100);
     }
     else {
-      $sidebar.stop().animate({ marginTop: 0 });
+      sidebar.stop().animate({ marginTop: 0 }, 100);
     }
   });
 });
 
 // Starts the game
 function start () {
-  var selected = [];
-  
+  var selectedCell = false,
+      deselect = function (node) {
+        node.removeClass('selected');
+        selectedCell = false; 
+      };
+
   // Handles selecting & matching the cells
-  // TODO   mb deselect when unmatching cells selected (then default case is not needed)
-  // TODO   one day: make cool animation for cells disappearing (one day, one day)
   // TODO   keep in mind that "_" will not stand for empty cells forever, modify switch accordingly
-  selectorFn = function() {
-    var res, node = $(this);
+  selectorFn = function(event) {
+    var node = $(event.target);
+
+    // Deselects if a selected cell is clicked
+    if (node.is('.selected')) { deselect(node); }
     
-    switch (selected.length) {
-      case 0:
-        if (node.text() !== "_") {      // we only select non-empty cells
+    else {
+      if (node.text() !== "_") {      // we only select non-empty cells
+        if (!selectedCell) {
           node.addClass('selected');
-          selected.push(node.attr('id'));
-          //console.log("FIRST: " + selected);
+          selectedCell = node.attr('id');
         }
-        break;
-    
-    // matches when the second cell is selected
-      case 1:
-        if (node.text() !== "_") {
-          node.addClass('selected');
-          selected.push(node.attr('id'));
-          //console.log("Second: " + selected);
-          res = g.matchCells(selected[0], selected[1]); 
-          if (res) {
-            // deselect all
-            $('.selected').removeClass('selected');
-            selected = [];
-            //console.log("deselected");
-            paint();
-          }
-        }
-        break;
-    
-      default:
-        if (node.text() !== "_") {
-          // deselect first selected element
-          $("#"+selected[0]).removeClass('selected');
-          selected.splice(0,1);
-          
-          // add new element
-          node.addClass('selected');
-          selected.push(node.attr('id'));
-          
-          //console.log("Another Second: " + selected);
-          g.matchCells(selected[0], selected[1]); 
-          
-          // deselect all
-          $('.selected').removeClass('selected');
-          selected = [];
-          //console.log("deselected");
+        // matches when the second cell is selected
+        else {
+          g.matchCells(selectedCell, node.attr('id')); 
+          deselect(node);
           paint();
         }
-        break;
       } 
-    };
-  
-  deselectorFn = function() {
-    if(!$(event.target).is('.cell'))
-    {
-      $('.selected').removeClass('selected');
-      selected = [];  // everything's deselected so the array must be emptied
     }
+  };
+  
+  deselectorFn = function(event) {
+    if (!$(event.target).is('.cell')) { deselect($('.selected')); }
   };
   
   g = new GameField();
 
+  $(window).scrollTop(0);
   paint();
-  showRules();  // TODO   rules should not reappear on restart if they were closed
+  showRules();
 };
 
 // Restarts the game
@@ -139,11 +102,6 @@ function addMore () {
 function cancel () {
   g.restore();
   paint();
-};
-
-// Highlights next possible move
-function hint () {
-  alert("Implement me!");
 };
 
 // Shows the rules
@@ -201,7 +159,6 @@ function paint () {
   /*$("#rowCount").empty();
   $("#cellCount").empty();*/
   
-  console.log(this.highScore);
   $("#score").append(g.getScore());
   $("#highScore").append(this.highScore);
   /*$("#rowCount").append(g.getRowCount());
