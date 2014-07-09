@@ -99,6 +99,9 @@ div {
   /*background-color: #FFFF99*/
   border: 1px solid black;
   border-radius: 10px;
+  -webkit-transform: rotate(15deg);
+  -ms-transform: rotate(15deg);
+  transform: rotate(15deg);
 }
 
 #rules {

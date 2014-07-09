@@ -54,7 +54,7 @@ function start () {
     if (node.is('.selected')) { deselect(node); }
     
     else {
-      if (node.text() !== "_") {      // we only select non-empty cells
+      if (node.text() !== '') {      // we only select non-empty cells
         if (!selectedCell) {
           node.addClass('selected');
           selectedCell = node.attr('id');
@@ -153,6 +153,9 @@ function msToTime (t) {
 
 // Adds field contents to the page in a proper manner
 function paint () {
+
+  var number;
+
   $("#gameField").empty();
   $("#score").empty();
   $("#highScore").empty();
@@ -166,10 +169,14 @@ function paint () {
   $("#cellCount").append(g.getCellCount());
   $("#cellCount").append(" cells");*/
   
+  // TODO   GameField should have a handler for that so that its private parts are not accessed from script :)
+  //        (as if it mmatters)
+
   for (i in g.rows) {
     r = '<div class = "row">';
     for (j in g.rows[i].cells) {
-      r += '<div class = "cell" id="' + i + ':' + j +'">' + g.rows[i].cells[j].getNumber() + '</div>';
+      number = g.rows[i].cells[j].getNumber()
+      r += '<div class = "cell" id="' + i + ':' + j +'">' + (number === 0 ? '' : number) + '</div>';
     }
     r += '</div>';
     $("#gameField").append(r);
