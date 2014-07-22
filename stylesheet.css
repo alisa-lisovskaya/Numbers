@@ -9,10 +9,6 @@ body {
   src: url(font/quikhand/Quikhand.ttf);
 }
 
-div {
-  /*border: 1px solid black;*/
-}
-
 #header {
   font-size: 24pt;
   text-align: center;
@@ -28,14 +24,10 @@ div {
 }
 
 /* 
-  - actionField must have fixed width
   - see where classes can become ids (and read if it is necessary (i think it is))
-  - current background is not seamless, find a seamless one
-  - font http://www.1001fonts.com/otto-font.html
-  - http://www.1001fonts.com/brownbaglunch-font.html
   - find better suiting backup fonts
   - why does the buttonField need font-family & size defined additionaly?
-  - ask Morgan to draw grid & borders for score & rules & selection circle
+  - grid & selection circle
 */
 
 #actionField {
@@ -53,7 +45,7 @@ div {
 }
 
 #gameField {
-  min-width: 328px;
+  min-width: 346px; /* can be less if cell border does not exist */
 }
 
 #scoreField {
@@ -74,7 +66,6 @@ div {
 .row {
   display: block;
   vertical-align: top;
-  /*background-color: #FFB6C1;*/
   outline: none;
   border: none;
   width: 100%;
@@ -86,32 +77,26 @@ div {
   background-color: transparent;
   outline: none;
   cursor: pointer;
-  /*border: 1px black solid;*/
+  border: 1px black solid;
   font-size: 32pt;
   text-align: center;
   text-transform: uppercase;
   width: 30px;
   margin: 1px;
-  border: 1px solid transparent;
+  /*border: 3px solid transparent;*/
+  border: none;
 }
 
 .cell.selected {
-  /*background-color: #FFFF99*/
-  border: 1px solid black;
-  border-radius: 10px;
-  -webkit-transform: rotate(15deg);
-  -ms-transform: rotate(15deg);
-  transform: rotate(15deg);
+  /*border: 3px solid transparent;*/
+  border: none;
+  background-color: white;
+  border-radius: 20px;
 }
 
 #rules {
-  /*border: 1px solid black;
-  border-radius: 10px;
-  background-color: white;
-  outline: none;*/
   padding: 15px;
   width: 400px;
-  /*margin-bottom: 20px;*/
 }
 
 #clearRules {
@@ -127,15 +112,15 @@ button {
   font-size: 18pt;
   width: 150px;
   height: 40px;
-  /*border: 1px solid black;*/
   background-color: white;
   border-radius: 10px;
   text-transform: uppercase;
   outline: none;
+  border: 2px solid #E1E8EE;
   cursor: pointer;
   margin: 0 5 5 5px;
 }
 
 button:active, button:focus, button:hover {
-  background-color: #F5DFE6;
+  background-color: #E1E8EE;
 }

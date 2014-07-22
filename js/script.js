@@ -1,13 +1,14 @@
 var g, selectorFn, deselectorFn, startTime, highScore,
+    keys = [],
     topPadding = $('.header').height() + $('.ruleField').height();
 
 // Main script
-//  TODO  keyboard controls!
-//  TODO  handle winning --> when field is cleared, something must happen
 //  TODO  paint() should be in its own handler i guess
-//  NOTE  score doesn't really make sense
 //  NOTE  when new game started, scroll position must be reset
-//  TODO  browser compatibility --> e.g. Safari doesn't support flex or what?
+//  TODO  Safari doesn't support flex or what?
+
+window.addEventListener("keydown", keysPressed, false);
+window.addEventListener("keyup", keysReleased, false);
 
 $(window).ready(function () {
   
@@ -89,19 +90,45 @@ function restart () {
   startTime = new Date();
   start();
 };
+ 
+// Handles the pressed keys
+function keysPressed (k) {
+  keys[k.keyCode] = true;
+     
+  // Ctrl + R
+  if (keys[17] && keys[82]) {
+    restart();
+    k.preventDefault();
+  }
+     
+  // Ctrl + Z
+  if (keys[17] && keys[90]) {
+    cancel();
+    k.preventDefault();
+  }
+};
+
+// Handles releasing the keys
+function keysReleased (k) {
+    keys[k.keyCode] = false;
+};
 
 // Adds more numbers when no more moves possible
 function addMore () {
-  g.addMore();
-  paint();
+  if (!g.isWon()) {
+    g.addMore();
+    paint();
+  }
 };
 
 // Cancels the last move
 // TODO   can alert when no more moves left to restore: http://api.jqueryui.com/dialog/
 // TODO   can use the same library for rules maybe
 function cancel () {
-  g.restore();
-  paint();
+  if (!g.isWon()) {
+    g.restore();
+    paint();
+  }
 };
 
 // Shows the rules
@@ -153,37 +180,28 @@ function msToTime (t) {
 
 // Adds field contents to the page in a proper manner
 function paint () {
-
   var number;
 
   $("#gameField").empty();
-  $("#score").empty();
-  $("#highScore").empty();
-  /*$("#rowCount").empty();
-  $("#cellCount").empty();*/
-  
-  $("#score").append(g.getScore());
-  $("#highScore").append(this.highScore);
-  /*$("#rowCount").append(g.getRowCount());
-  $("#rowCount").append(" rows");
-  $("#cellCount").append(g.getCellCount());
-  $("#cellCount").append(" cells");*/
-  
-  // TODO   GameField should have a handler for that so that its private parts are not accessed from script :)
-  //        (as if it mmatters)
 
-  for (i in g.rows) {
-    r = '<div class = "row">';
-    for (j in g.rows[i].cells) {
-      number = g.rows[i].cells[j].getNumber()
-      r += '<div class = "cell" id="' + i + ':' + j +'">' + (number === 0 ? '' : number) + '</div>';
+  if (!g.isWon()) {
+
+    // Shouldn't this be private?
+    for (i in g.rows) {
+      r = '<div class = "row">';
+      for (j in g.rows[i].cells) {
+        number = g.rows[i].cells[j].getNumber()
+        r += '<div class = "cell" id="' + i + ':' + j +'">' + (number === 0 ? '' : number) + '</div>';
+      }
+      r += '</div>';
+      $("#gameField").append(r);
     }
-    r += '</div>';
-    $("#gameField").append(r);
-  }
-  //console.log("GameField repainted");
   
-  $('.cell').click(selectorFn);
-  $(document).click(deselectorFn);
-  //g.print();
+    $('.cell').click(selectorFn);
+    $(document).click(deselectorFn);
+  }
+
+  else {
+    $("#gameField").append("You are the champion, my friend!");
+  }
 };

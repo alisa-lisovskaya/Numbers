@@ -1,7 +1,6 @@
 var GameField;
 
 /*  TODO  hint()  <--- how should the possible moves be stored
-    TODO  highScore() <--- save in localStorage unless this is not considered nice
   */
 
 GameField = function () {
@@ -9,10 +8,19 @@ GameField = function () {
 };
 
 GameField.prototype.score = 0;
+GameField.prototype.won = false;
+
+// Is the game won?
+GameField.prototype.isWon = function () {
+  return this.won;
+};
 
 // Updates row count, oddly enough
 GameField.prototype.updateRowCount = function () {
   this.rowCount = this.rows.length;
+  if (this.rowCount === 0) {
+    this.won = true;
+  }
 };
 
 // Updates cell count, oddly enough
@@ -87,7 +95,6 @@ GameField.prototype.noCellsBetweenInColumn = function (c1, c2) {
   else {
     for (i = row1+1; i < row2; i++) {
       if (!this.rows[i].cells[column].isEmpty()) { return false; }
-      //console.log("Cell empty: ");
     }
   }
   return true;
@@ -144,11 +151,11 @@ GameField.prototype.matched = function (c1, c2) {
   }
   
   // First we delete the lower row so that row numbers are not changed
-  if (this.rows[rowDown].isEmpty()) {
+  if (this.rows[rowDown] && this.rows[rowDown].isEmpty()) {
     this.reindexRowsDelete(rowDown);
     move.rowDown = rowDown;
   }
-  if (this.rows[rowUp].isEmpty()) {
+  if (this.rows[rowUp] && this.rows[rowUp].isEmpty()) {
     this.reindexRowsDelete(rowUp);
     move.rowUp = rowUp;
   }
@@ -189,12 +196,15 @@ GameField.prototype.reindexRowsInsert = function (r) {
 
 // Adds more numbers
 //  TODO    if first cell to be filled was cleared before, it must not be filled (cf. paper version!)
+//  TODO    something is wrong here, try adding 1s and behold
 GameField.prototype.addMore = function () {
   var r, i, j, start, numbers;
   
   r = this.rows.length-1;  // row number to start adding with
-  start = this.rows[r].getStartingEmptyCell();  // cell number to start edding with
+  start = this.rows[r].getStartingEmptyCell();  // cell number to start adding with
   numbers = this.getAllNumbers();
+
+  console.log(JSON.stringify(numbers));
   
   if (numbers.length > 0) {
     // Fills the empty part of last row if needed
@@ -274,6 +284,7 @@ GameField.prototype.getAllNumbers = function () {
   for (i in this.rows) {
     for (j in this.rows[i].cells) {
       if (!this.rows[i].cells[j].isEmpty()) {
+        console.log("row " + i + " cell " + j + " content " + this.rows[i].cells[j].number);
         numbers.push(this.rows[i].cells[j].number);
       }
     }
@@ -317,12 +328,12 @@ GameField.prototype.setUp = function () {
   this.memory = [];
   this.score = 0;
   
-  /*r = new Row([0,0,9,0,0,0,1,0,0], 0);
+  r = new Row([0,0,9,0,0,0,1,0,0], 0);
   this.rows.push(r);
   r = new Row([0,0,9,0,0,0,1,0,0], 1);
-  this.rows.push(r);*/
+  this.rows.push(r);
   
-  r = new Row([1,2,3,4,5,6,7,8,9], 0);
+  /*r = new Row([1,2,3,4,5,6,7,8,9], 0);
   this.rows.push(r);
   r = new Row([1,1,1,1,2,1,3,1,4], 1);
   this.rows.push(r);
@@ -333,7 +344,7 @@ GameField.prototype.setUp = function () {
   r = new Row([1,5,1,6,1,7,1,8,1], 4);
   this.rows.push(r);
   r = new Row([9,0,0,0,0,0,0,0,0], 5);
-  this.rows.push(r);
+  this.rows.push(r);*/
   
   this.updateRowCount();
   this.updateCellCount();
