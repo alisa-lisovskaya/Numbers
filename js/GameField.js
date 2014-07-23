@@ -198,18 +198,21 @@ GameField.prototype.reindexRowsInsert = function (r) {
 //  TODO    if first cell to be filled was cleared before, it must not be filled (cf. paper version!)
 //  TODO    something is wrong here, try adding 1s and behold
 GameField.prototype.addMore = function () {
-  var r, i, j, start, numbers;
+  var r, i, start, numbers;
   
   r = this.rows.length-1;  // row number to start adding with
   start = this.rows[r].getStartingEmptyCell();  // cell number to start adding with
   numbers = this.getAllNumbers();
 
-  console.log(JSON.stringify(numbers));
-  
   if (numbers.length > 0) {
     // Fills the empty part of last row if needed
     while (start < 9) {
-      this.rows[r].cells[start].number = numbers.shift();
+      if (i = numbers.shift()) {
+        this.rows[r].cells[start].number = i;
+      }
+      else {
+        this.rows[r].cells[start].number = 0;
+      }
       start++;
     }
   
@@ -284,12 +287,11 @@ GameField.prototype.getAllNumbers = function () {
   for (i in this.rows) {
     for (j in this.rows[i].cells) {
       if (!this.rows[i].cells[j].isEmpty()) {
-        console.log("row " + i + " cell " + j + " content " + this.rows[i].cells[j].number);
         numbers.push(this.rows[i].cells[j].number);
       }
     }
   }
-  
+
   return numbers;
 };
 

@@ -191,6 +191,8 @@ function paint () {
       r = '<div class = "row">';
       for (j in g.rows[i].cells) {
         number = g.rows[i].cells[j].getNumber()
+        console.log(number);
+        g.rows[i].cells[j].print();
         r += '<div class = "cell" id="' + i + ':' + j +'">' + (number === 0 ? '' : number) + '</div>';
       }
       r += '</div>';
