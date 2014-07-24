@@ -50,7 +50,8 @@ GameField.prototype.matchCells = function (id1, id2) {
   
   if (c1.matches(c2)) {
     //console.log("Cells matched");
-    if ((c1.sameRow(c2) && this.noCellsBetweenInRow(c1, c2)) || (c1.sameColumn(c2) && this.noCellsBetweenInColumn(c1, c2))) {
+    if ((c1.sameRow(c2) && this.noCellsBetweenInRow(c1, c2)) || 
+        (c1.sameColumn(c2) && this.noCellsBetweenInColumn(c1, c2))) {
       //console.log("Cells will be deleted");
       this.matched(c1, c2);
       return true;
@@ -65,7 +66,9 @@ GameField.prototype.matchCells = function (id1, id2) {
         lowerCell = c1;
       }
       
-      if ((higherCell.rowNumber === lowerCell.rowNumber-1) && this.rows[higherCell.rowNumber].noCellsRight(higherCell) && this.rows[lowerCell.rowNumber].noCellsLeft(lowerCell)) {
+      if ((higherCell.rowNumber === lowerCell.rowNumber-1) && 
+            this.rows[higherCell.rowNumber].noCellsRight(higherCell) && 
+            this.rows[lowerCell.rowNumber].noCellsLeft(lowerCell)) {
         this.matched(c1, c2);
         return true;
       }
@@ -171,11 +174,11 @@ GameField.prototype.reindexRowsDelete = function (r) {
   
   this.rows.splice(r,1);
   
-  console.log("Deleting row " + r);
+  //console.log("Deleting row " + r);
   
   if (this.rows[i]) {
     for (i; i < this.rows.length; i++) {
-      console.log("decrementing " + i);
+      //console.log("decrementing " + i);
       this.rows[i].rowNumberDecrement();
     }
   }
@@ -185,10 +188,10 @@ GameField.prototype.reindexRowsDelete = function (r) {
 GameField.prototype.reindexRowsInsert = function (r) {
   var i = r;
   
-  console.log("Inserting after row " + r);
+  //console.log("Inserting after row " + r);
   if (this.rows[i]) {
     for (i; i < this.rows.length; i++) {
-      console.log("incrementing " + i);
+      //console.log("incrementing " + i);
       this.rows[i].rowNumberIncrement();
     }
   }
@@ -231,8 +234,6 @@ GameField.prototype.addMore = function () {
 GameField.prototype.restore = function () {
   var move, c1, c2;
   
-  console.log(JSON.stringify(this.memory));
-  
   if (this.memory.length > 0) {
     move = this.memory.pop();
     
@@ -240,13 +241,11 @@ GameField.prototype.restore = function () {
     c2 = move.cell2;
     
     // if rows have been deleted, they need to be restored
-    if (move.rowUp) {
-      this.reindexRowsInsert(move.rowUp);
-      this.rows.splice(move.rowUp, 0, new Row ([], move.rowUp));
+    if (move.rowUp) { 
+      this.restoreRow(move.rowUp);
     }
     if (move.rowDown) {
-      this.reindexRowsInsert(move.rowDown);
-      this.rows.splice(move.rowDown, 0, new Row ([], move.rowDown));
+      this.restoreRow(move.rowDown);
     }
     
     // now cells can be restored in the rows they've been in
@@ -256,6 +255,12 @@ GameField.prototype.restore = function () {
   
   this.updateRowCount();
   this.updateCellCount();
+};
+
+// Restores the row with the given number (filled with empty cells)
+GameField.prototype.restoreRow = function (rowNumber) {
+  this.reindexRowsInsert(rowNumber);
+  this.rows.splice(rowNumber, 0, new Row ([], rowNumber));
 };
 
 // Pushes new rows with numbers from number array starting with startRow
@@ -310,7 +315,6 @@ GameField.prototype.getCellCount = function () {
   return this.cellCount;
 };
 
-
 // Prints the gamefield contents on the console
 GameField.prototype.print = function () {
   var i, j;
@@ -320,7 +324,6 @@ GameField.prototype.print = function () {
    }
  }
 };
-
 
 // Sets up initial state of the game
 GameField.prototype.setUp = function () {

@@ -66,13 +66,6 @@ Cell.prototype.sameRow = function (c2) {
   }
 }
 
-// Returns the number if any or _
-Cell.prototype.getNumber = function () {
-  //var ret = this.number || '_';
-  //return ret;
-  return this.number;
-};
-
 // Removes cell making it appear empty
 Cell.prototype.remove = function () {
   this.number = 0;
