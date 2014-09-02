@@ -333,23 +333,19 @@ GameField.prototype.setUp = function () {
   this.memory = [];
   this.score = 0;
   
-  r = new Row([0,0,9,0,0,0,1,0,0], 0);
-  this.rows.push(r);
-  r = new Row([0,0,9,0,0,0,1,0,0], 1);
-  this.rows.push(r);
+  //r = new Row([0,0,9,0,0,0,1,0,0], 0);
+  //this.rows.push(r);
+  //r = new Row([0,0,9,0,0,0,1,0,0], 1);
+  //this.rows.push(r);
   
-  /*r = new Row([1,2,3,4,5,6,7,8,9], 0);
+  r = new Row([1,2,3,4,5,6,7,8,9], 0);
   this.rows.push(r);
   r = new Row([1,1,1,1,2,1,3,1,4], 1);
   this.rows.push(r);
-  r = new Row([0,0,9,0,0,0,1,0,0], 2);  // temp
+  r = new Row([1,5,1,6,1,7,1,8,1], 2);
   this.rows.push(r);
-  r = new Row([0,0,1,0,0,0,9,0,0], 3);  // temp
+  r = new Row([9,0,0,0,0,0,0,0,0], 3);
   this.rows.push(r);
-  r = new Row([1,5,1,6,1,7,1,8,1], 4);
-  this.rows.push(r);
-  r = new Row([9,0,0,0,0,0,0,0,0], 5);
-  this.rows.push(r);*/
   
   this.updateRowCount();
   this.updateCellCount();
