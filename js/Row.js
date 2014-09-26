@@ -61,8 +61,6 @@ Row.prototype.rowNumberIncrement = function () {
 Row.prototype.getStartingEmptyCell = function () {
   var i;
   
-  //console.log("starting search");
-  
   for (i = 8; i >= 0; i--) {
     if (!this.cells[i].isEmpty()) { return i+1; }
   }

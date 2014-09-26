@@ -128,11 +128,9 @@ function paint () {
 
     // Shouldn't this be private?
     for (i in g.rows) {
-      r = '<div class = "row">';
+      r = '<div class = "row">' + '<div class = "rowNumber">' + i + '</div>';
       for (j in g.rows[i].cells) {
         number = g.rows[i].cells[j].number;
-        console.log(number);
-        g.rows[i].cells[j].print();
         r += '<div class = "cell" id="' + i + ':' + j +'">' + (number === 0 ? '<div class="removed"></div>' : number) + '</div>';
       }
       r += '</div>';

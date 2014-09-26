@@ -38,7 +38,7 @@ body {
 }
 
 #gameField {
-  min-width: 346px; /* can be less if cell border does not exist */
+  min-width: 360px; /* can be less if cell border does not exist */
 }
 
 
@@ -66,6 +66,20 @@ body {
   text-align: center;
   text-transform: uppercase;
   vertical-align: top;
+  width: 30px;
+}
+
+.rownumber {
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: default;
+  display: inline-block;
+  font-size: 10pt;
+  margin: 1px;
+  outline: none;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: bottom;
   width: 30px;
 }
 
