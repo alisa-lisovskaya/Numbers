@@ -31,7 +31,6 @@ Cell.prototype.print = function () {
 
 // Matches the cell to the parameter number-wise
 Cell.prototype.matches = function (c2) {
-  // console.log("matchig " + this.number + " to " + c2.number);
   if (this.isEmpty() || c2.isEmpty()) {
     return false;
   }
@@ -46,9 +45,6 @@ Cell.prototype.sameColumn = function (c2) {
     return false;
   }
   else {
-    /*if (this.columnNumber === c2.columnNumber) {
-      console.log("same column!");
-    }*/
     return this.columnNumber === c2.columnNumber;
   }
 }
@@ -59,9 +55,6 @@ Cell.prototype.sameRow = function (c2) {
     return false;
   }
   else {
-    /*if (this.rowNumber === c2.rowNumber) {
-      console.log("same row!");
-    }*/
     return this.rowNumber === c2.rowNumber;
   }
 }
@@ -71,5 +64,3 @@ Cell.prototype.remove = function () {
   this.number = 0;
   return this;
 };
-
-//module.exports = Cell;

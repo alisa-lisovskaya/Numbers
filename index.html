@@ -9,18 +9,24 @@
     <title>I'm proud to be a part of this number</title>
   </head>
   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <body onload="playingTime()">
+  <body>
     <div id="container">
       <div id="header">I'm proud to be a part of this number.</div>
-      <div id="ruleField"></div>
+      <div id="ruleField">Delete a pair of numbers if: 
+        <ol>
+          <li>they are equal or sum up to 10,</li>
+          <li>they are in the same row or column, and</li>
+          <li>there is no other number between them</li>
+        </ol>
+      </div>
       <div id="actionField">
         <div class="sidebar">
-          <button onclick="restart()">New Game</button>
+          <button onclick="start()">Restart (R)</button>
         </div>
         <div id="gameField"></div>
         <div class="sidebar">
-          <button onclick="cancel()">Cancel</button>
-          <button onclick="addMore()">Add more</button>
+          <button onclick="cancel()">Cancel (C)</button>
+          <button onclick="addMore()">Add more (A)</button>
         </div>
       </div> 
     </div>

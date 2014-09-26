@@ -1,7 +1,5 @@
 var Row;
 
-/** @param cell Array<Number> */
-
 Row = function (numbers, r) {
   var c, i;
   this.cells = [];
@@ -23,8 +21,6 @@ Row = function (numbers, r) {
 // Returns the number of non-empty cells in the row
 Row.prototype.cellCount = function () {
   var i, n = 0;
-  
-  //console.log("counting cells");
   
   for (i = 0; i < 9; i++) {
     if (!this.cells[i].isEmpty()) { n++; }
@@ -68,7 +64,6 @@ Row.prototype.getStartingEmptyCell = function () {
   //console.log("starting search");
   
   for (i = 8; i >= 0; i--) {
-    //console.log("checking " + i);
     if (!this.cells[i].isEmpty()) { return i+1; }
   }
   return 0;
@@ -78,11 +73,9 @@ Row.prototype.getStartingEmptyCell = function () {
 Row.prototype.noCellsRight = function (c) {
   var i = c.columnNumber;
   
-  //console.log("search right from " + i);
   if (i === 8) { return true; }
   
   for (i++; i < 9; i++) {
-    //console.log("Checking " + i);
     if (!this.cells[i].isEmpty()) { return false; }
   }
   return true;
@@ -92,14 +85,10 @@ Row.prototype.noCellsRight = function (c) {
 Row.prototype.noCellsLeft = function (c) {
   var i = c.columnNumber;
   
-  //console.log("search left from " + i);
   if (i === 0) { return true; }
   
   for (i--; i >= 0; i--) {
-    //console.log("Checking " + i);
     if (!this.cells[i].isEmpty()) { return false; }
   }
   return true;
 };
-  
-//module.exports = Row;

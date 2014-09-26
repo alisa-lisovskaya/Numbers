@@ -1,4 +1,5 @@
-var g, selectorFn, deselectorFn, startTime, highScore,
+var g, selectorFn, deselectorFn,
+    WINNER = "You are the champion, my friend!",
     keys = [],
     topPadding = $('.header').height() + $('.ruleField').height();
 
@@ -11,11 +12,6 @@ window.addEventListener("keydown", keysPressed, false);
 window.addEventListener("keyup", keysReleased, false);
 
 $(window).ready(function () {
-  
-  if(typeof(Storage) !== "undefined") {
-    highScore = localStorage.getItem("highScore") || 0;
-  }
-  
   start();
 });
 
@@ -47,7 +43,6 @@ function start () {
       };
 
   // Handles selecting & matching the cells
-  // TODO   keep in mind that "_" will not stand for empty cells forever, modify switch accordingly
   selectorFn = function(event) {
     var node = $(event.target);
 
@@ -78,33 +73,25 @@ function start () {
 
   $(window).scrollTop(0);
   paint();
-  showRules();
-};
-
-// Restarts the game
-function restart () {
-  if (g.getScore() > this.highScore) {
-    this.highScore = g.getScore();
-    localStorage.setItem("highScore", this.highScore);
-  }
-  startTime = new Date();
-  start();
 };
  
 // Handles the pressed keys
 function keysPressed (k) {
   keys[k.keyCode] = true;
      
-  // Ctrl + R
-  if (keys[17] && keys[82]) {
-    restart();
-    k.preventDefault();
+  // R
+  if (keys[82]) {
+    start();
   }
      
-  // Ctrl + Z
-  if (keys[17] && keys[90]) {
+  // C
+  if (keys[67]) {
     cancel();
-    k.preventDefault();
+  }
+
+  // A
+  if (keys[65]) {
+    addMore();
   }
 };
 
@@ -131,53 +118,6 @@ function cancel () {
   }
 };
 
-// Shows the rules
-function showRules () {
-  var r = "<div id='rules'><div id='clearRules' onclick='closeRules()'>X</div>Delete a pair of numbers if: <ol><li>they are equal or sum up to 10,</li><li>they are in the same row or column, and</li><li>there is no other number between them</li></ol></div>";
-  $('#ruleField').empty();
-  $('#ruleField').append(r);
-};
-
-// Removes the rules
-function closeRules () {
-  $('#ruleField').empty();
-};
-
-// Gets the timer
-function playingTime() {
-  var today, t, time, ms;
-  
-  if (!startTime) { startTime = new Date() };   // get start time
-  
-  today = new Date();
-  
-  ms = today.getTime() - startTime.getTime();
-  time = msToTime(ms);
-  
-  // $("#timer").empty();
-  // $("#timer").append(time);
-  
-  t = setTimeout(function(){ playingTime() }, 500);
-}
-
-// Converts milliseconds to time
-function msToTime (t) {
-  var ms, s, m, h;
-  
-  function addZ (n) {
-    return (n<10? '0':'') + n;
-  }
-
-  ms = t % 1000;
-  t = (t - ms) / 1000;
-  s = t % 60;
-  t = (t - s) / 60;
-  m = t % 60;
-  h = (t - m) / 60;
-
-  return addZ(h) + ':' + addZ(m) + ':' + addZ(s);
-}
-
 // Adds field contents to the page in a proper manner
 function paint () {
   var number;
@@ -193,7 +133,7 @@ function paint () {
         number = g.rows[i].cells[j].number;
         console.log(number);
         g.rows[i].cells[j].print();
-        r += '<div class = "cell" id="' + i + ':' + j +'">' + (number === 0 ? '' : number) + '</div>';
+        r += '<div class = "cell" id="' + i + ':' + j +'">' + (number === 0 ? '<div class="removed"></div>' : number) + '</div>';
       }
       r += '</div>';
       $("#gameField").append(r);
@@ -204,6 +144,6 @@ function paint () {
   }
 
   else {
-    $("#gameField").append("You are the champion, my friend!");
+    $("#gameField").append(WINNER);
   }
 };

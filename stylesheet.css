@@ -1,7 +1,7 @@
 body {
+  background-image:url('img/back.jpg');
   font-family: Quikhand, Verdana, sans-serif;
   font-size: 18pt;
-  background-image:url('img/back.jpg');
 }
 
 @font-face {
@@ -11,9 +11,9 @@ body {
 
 #header {
   font-size: 24pt;
-  text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 #container {
@@ -22,13 +22,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-
-/* 
-  - see where classes can become ids (and read if it is necessary (i think it is))
-  - find better suiting backup fonts
-  - why does the buttonField need font-family & size defined additionaly?
-  - grid & selection circle
-*/
 
 #actionField {
   display: flex;
@@ -48,77 +41,58 @@ body {
   min-width: 346px; /* can be less if cell border does not exist */
 }
 
-#scoreField {
-  width: 150px;
-  text-align: center;
-  margin-bottom: 20px;
-}
 
-#score, #highscore {
-  margin-top: 5px;
-}
-
-.header {
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.row {
-  display: block;
-  vertical-align: top;
-  outline: none;
-  border: none;
-  width: 100%;
-}
-
-.cell {
-  display: inline-block;
-  vertical-align: top;
-  background-color: transparent;
-  outline: none;
-  cursor: pointer;
-  border: 1px black solid;
-  font-size: 32pt;
-  text-align: center;
-  text-transform: uppercase;
-  width: 30px;
-  margin: 1px;
-  /*border: 3px solid transparent;*/
-  border: none;
-}
-
-.cell.selected {
-  /*border: 3px solid transparent;*/
-  border: none;
-  background-color: white;
-  border-radius: 20px;
-}
-
-#rules {
+#ruleField {
   padding: 15px;
   width: 400px;
 }
 
-#clearRules {
-  visibility: hidden;
-  float: right;
-  font-weight: bold;
-  cursor: pointer;
+.row {
+  border: none;
+  display: block;
+  vertical-align: top;
   outline: none;
+  width: 100%;
+}
+
+.cell {
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 32pt;
+  margin: 1px;
+  outline: none;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: top;
+  width: 30px;
+}
+
+.cell.selected {
+  background-color: white;
+  border: 1px solid #E1E8EE;
+  border-radius: 20px;
+}
+
+.removed {
+  background-image: url('img/removed.jpg');
+  height: 40px;
+  width: 100%;
 }
 
 button {
-  font-family: Quikhand;
-  font-size: 18pt;
-  width: 150px;
-  height: 40px;
+  border: 2px solid #E1E8EE;
   background-color: white;
   border-radius: 10px;
-  text-transform: uppercase;
-  outline: none;
-  border: 2px solid #E1E8EE;
   cursor: pointer;
+  font-family: Quikhand;
+  font-size: 18pt;
+  height: 40px;
   margin: 0 5 5 5px;
+  outline: none;
+  text-transform: uppercase;
+  width: 150px;
 }
 
 button:active, button:focus, button:hover {
