@@ -109,6 +109,6 @@ button {
   width: 150px;
 }
 
-button:active, button:focus, button:hover {
+button:hover {
   background-color: #E1E8EE;
 }

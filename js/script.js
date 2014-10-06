@@ -1,12 +1,10 @@
 var g, selectorFn, deselectorFn,
     WINNER = "You are the champion, my friend!",
+    RANDOM_MODE = false,
     keys = [],
     topPadding = $('.header').height() + $('.ruleField').height();
 
 // Main script
-//  TODO  paint() should be in its own handler i guess
-//  NOTE  when new game started, scroll position must be reset
-//  TODO  Safari doesn't support flex or what?
 
 window.addEventListener("keydown", keysPressed, false);
 window.addEventListener("keyup", keysReleased, false);
@@ -69,7 +67,7 @@ function start () {
     if (!$(event.target).is('.cell')) { deselect($('.selected')); }
   };
   
-  g = new GameField();
+  g = new GameField(RANDOM_MODE);
 
   $(window).scrollTop(0);
   paint();
@@ -118,9 +116,14 @@ function cancel () {
   }
 };
 
+function randomMode () {
+  RANDOM_MODE = !RANDOM_MODE;
+  start();
+}
+
 // Adds field contents to the page in a proper manner
 function paint () {
-  var number;
+  var number, buttonText;
 
   $("#gameField").empty();
 
@@ -139,6 +142,9 @@ function paint () {
   
     $('.cell').click(selectorFn);
     $(document).click(deselectorFn);
+
+    buttonText = "Random: " + (RANDOM_MODE ? "on" : "off");
+    $('#random').text(buttonText);
   }
 
   else {

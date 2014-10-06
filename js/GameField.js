@@ -1,7 +1,8 @@
-var GameField;
+var GameField,
+    ROW_LENGTH = 9;
 
-GameField = function () {
-  this.setUp();
+GameField = function (rand) {
+  this.setUp(rand);
 };
 
 GameField.prototype.won = false;
@@ -273,7 +274,7 @@ GameField.prototype.getAllNumbers = function () {
 GameField.prototype.randomNumbers = function () {
   var i, ret = [];
 
-  for (i = 0; i < 9; i++) {
+  for (i = 0; i < ROW_LENGTH; i++) {
     ret.push(Math.floor(Math.random()*9+1));
   }
 
@@ -281,30 +282,34 @@ GameField.prototype.randomNumbers = function () {
 };
 
 // Sets up initial state of the game
-GameField.prototype.setUp = function () {
+GameField.prototype.setUp = function (rand) {
   var r, i;
   
   this.rowCount = 0;
   this.rows = [];
   this.memory = [];
-  
-  //r = new Row([0,0,9,0,0,0,1,0,0], 0);
-  //this.rows.push(r);
-  //r = new Row([0,0,9,0,0,0,1,0,0], 1);
-  //this.rows.push(r);
-  
-  // r = new Row([1,2,3,4,5,6,7,8,9], 0);
-  // this.rows.push(r);
-  // r = new Row([1,1,1,1,2,1,3,1,4], 1);
-  // this.rows.push(r);
-  // r = new Row([1,5,1,6,1,7,1,8,1], 2);
-  // this.rows.push(r);
-  // r = new Row([9,0,0,0,0,0,0,0,0], 3);
-  // this.rows.push(r);
 
-  for (i = 0; i < 4; i++) {
-    var r = new Row(this.randomNumbers(),i);
-    console.log(r);
+  this.randomMode = rand | false;
+
+  if (this.randomMode) {
+    for (i = 0; i < 4; i++) {
+      r = new Row(this.randomNumbers(),i);
+      this.rows.push(r);
+    }
+  }
+  else {
+    // r = new Row([0,0,9,0,0,0,1,0,0], 0);
+    // this.rows.push(r);
+    // r = new Row([0,0,9,0,0,0,1,0,0], 1);
+    // this.rows.push(r);
+    
+    r = new Row([1,2,3,4,5,6,7,8,9], 0);
+    this.rows.push(r);
+    r = new Row([1,1,1,1,2,1,3,1,4], 1);
+    this.rows.push(r);
+    r = new Row([1,5,1,6,1,7,1,8,1], 2);
+    this.rows.push(r);
+    r = new Row([9,0,0,0,0,0,0,0,0], 3);
     this.rows.push(r);
   }
   
