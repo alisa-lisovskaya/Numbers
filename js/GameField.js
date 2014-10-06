@@ -269,9 +269,20 @@ GameField.prototype.getAllNumbers = function () {
   return numbers;
 };
 
+// Returns an array of 9 random numbers
+GameField.prototype.randomNumbers = function () {
+  var i, ret = [];
+
+  for (i = 0; i < 9; i++) {
+    ret.push(Math.floor(Math.random()*9+1));
+  }
+
+  return ret;
+};
+
 // Sets up initial state of the game
 GameField.prototype.setUp = function () {
-  var r;
+  var r, i;
   
   this.rowCount = 0;
   this.rows = [];
@@ -282,14 +293,20 @@ GameField.prototype.setUp = function () {
   //r = new Row([0,0,9,0,0,0,1,0,0], 1);
   //this.rows.push(r);
   
-  r = new Row([1,2,3,4,5,6,7,8,9], 0);
-  this.rows.push(r);
-  r = new Row([1,1,1,1,2,1,3,1,4], 1);
-  this.rows.push(r);
-  r = new Row([1,5,1,6,1,7,1,8,1], 2);
-  this.rows.push(r);
-  r = new Row([9,0,0,0,0,0,0,0,0], 3);
-  this.rows.push(r);
+  // r = new Row([1,2,3,4,5,6,7,8,9], 0);
+  // this.rows.push(r);
+  // r = new Row([1,1,1,1,2,1,3,1,4], 1);
+  // this.rows.push(r);
+  // r = new Row([1,5,1,6,1,7,1,8,1], 2);
+  // this.rows.push(r);
+  // r = new Row([9,0,0,0,0,0,0,0,0], 3);
+  // this.rows.push(r);
+
+  for (i = 0; i < 4; i++) {
+    var r = new Row(this.randomNumbers(),i);
+    console.log(r);
+    this.rows.push(r);
+  }
   
   this.updateRowCount();
-}
+};
