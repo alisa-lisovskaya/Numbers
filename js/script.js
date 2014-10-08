@@ -134,7 +134,7 @@ function paint () {
       r = '<div class = "row">' + '<div class = "rowNumber">' + i + '</div>';
       for (j in g.rows[i].cells) {
         number = g.rows[i].cells[j].number;
-        r += '<div class = "cell" id="' + i + ':' + j +'">' + (number === 0 ? '<div class="removed"></div>' : number) + '</div>';
+        r += '<div id="' + i + ':' + j +'" class = "cell' + (number === 0 ? ' removed">' : '">' + number) + '</div>';
       }
       r += '</div>';
       $("#gameField").append(r);

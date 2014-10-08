@@ -57,7 +57,7 @@ body {
 
 .cell {
   background-color: transparent;
-  border: 1px solid transparent;
+  border: 1px transparent;
   cursor: pointer;
   display: inline-block;
   font-size: 32pt;
@@ -66,7 +66,7 @@ body {
   text-align: center;
   text-transform: uppercase;
   vertical-align: top;
-  width: 30px;
+  width: 32px;
 }
 
 .rownumber {
@@ -84,15 +84,21 @@ body {
 }
 
 .cell.selected {
-  background-color: white;
+  background-image: url('img/markedNumber.png');
+  border: 1px transparent;
+  margin: 1px;
+  width: 32px;
+/*  background-color: white;
   border: 1px solid #E1E8EE;
-  border-radius: 20px;
+  border-radius: 20px;*/
 }
 
-.removed {
-  background-image: url('img/removed.jpg');
-  height: 40px;
-  width: 100%;
+.cell.removed {
+  background-image: url('img/erasedNumber4d.png');
+  border: 1px transparent;
+  height: 49px;
+  margin: 1px;
+  width: 32px;
 }
 
 button {
