@@ -51,11 +51,11 @@ function start () {
       if (node.text() !== '') {      // we only select non-empty cells
         if (!selectedCell) {
           node.addClass('selected');
-          selectedCell = node.attr('id');
+          selectedCell = node;
         }
         // matches when the second cell is selected
         else {
-          g.matchCells(selectedCell, node.attr('id')); 
+          g.matchCells(selectedCell.attr('id'), node.attr('id')); 
           deselect(node);
           paint();
         }
