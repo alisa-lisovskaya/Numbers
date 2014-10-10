@@ -84,17 +84,14 @@ body {
 }
 
 .cell.selected {
-  background-image: url('img/markedNumber.png');
+  background-image: url('img/marked.png');
   border: 1px transparent;
   margin: 1px;
   width: 32px;
-/*  background-color: white;
-  border: 1px solid #E1E8EE;
-  border-radius: 20px;*/
 }
 
 .cell.removed {
-  background-image: url('img/erasedNumber4d.png');
+  background-image: url('img/removed.png');
   border: 1px transparent;
   height: 49px;
   margin: 1px;
