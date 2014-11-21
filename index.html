@@ -1,6 +1,7 @@
 <html>
   <head>
     <link href="stylesheet.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/prefixfree.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/Cell.js"></script>
@@ -21,13 +22,13 @@
       </div>
       <div id="actionField">
         <div class="sidebar">
-          <button onclick="start()">Restart (R)</button>
+          <button onclick="start()">(R)estart</button>
           <button id="random" onclick="randomMode()">Random</button>
         </div>
         <div id="gameField"></div>
         <div class="sidebar">
-          <button onclick="cancel()">Cancel (C)</button>
-          <button onclick="addMore()">Add more (A)</button>
+          <button onclick="cancel()">(C)ancel</button>
+          <button onclick="addMore()">(A)dd more</button>
         </div>
       </div> 
     </div>

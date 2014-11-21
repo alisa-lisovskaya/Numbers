@@ -64,9 +64,12 @@ body {
   margin: 1px;
   outline: none;
   text-align: center;
-  text-transform: uppercase;
   vertical-align: top;
   width: 32px;
+}
+
+.cell:hover {
+  color: red;
 }
 
 .rownumber {
