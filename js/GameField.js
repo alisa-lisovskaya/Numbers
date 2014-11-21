@@ -272,10 +272,14 @@ GameField.prototype.getAllNumbers = function () {
 
 // Returns an array of 9 random numbers
 GameField.prototype.randomNumbers = function () {
-  var i, ret = [];
+  var i, n, ret = [];
 
   for (i = 0; i < ROW_LENGTH; i++) {
-    ret.push(Math.floor(Math.random()*9+1));
+    n = Math.floor(Math.random()*9+1);
+    while (n === ret[i-1]) {
+      n = Math.floor(Math.random()*9+1);
+    }
+    ret.push(n);
   }
 
   return ret;
@@ -298,11 +302,6 @@ GameField.prototype.setUp = function (rand) {
     }
   }
   else {
-    // r = new Row([0,0,9,0,0,0,1,0,0], 0);
-    // this.rows.push(r);
-    // r = new Row([0,0,9,0,0,0,1,0,0], 1);
-    // this.rows.push(r);
-    
     r = new Row([1,2,3,4,5,6,7,8,9], 0);
     this.rows.push(r);
     r = new Row([1,1,1,1,2,1,3,1,4], 1);
