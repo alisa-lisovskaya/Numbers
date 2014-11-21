@@ -117,10 +117,7 @@ GameField.prototype.noCellsBetweenInRow = function (c1, c2) {
 // Removes cells, removes & reindexates rows if empty
 GameField.prototype.matched = function (c1, c2) {
   var rowUp, rowDown, move = {};
-  
-  this.score += c1.number;
-  this.score += c2.number;
-    
+
   move.cell1 = c1.clone();
   move.cell2 = c2.clone();
   
@@ -301,6 +298,7 @@ GameField.prototype.setUp = function (rand) {
       this.rows.push(r);
     }
   }
+
   else {
     r = new Row([1,2,3,4,5,6,7,8,9], 0);
     this.rows.push(r);
@@ -311,6 +309,6 @@ GameField.prototype.setUp = function (rand) {
     r = new Row([9,0,0,0,0,0,0,0,0], 3);
     this.rows.push(r);
   }
-  
+
   this.updateRowCount();
 };

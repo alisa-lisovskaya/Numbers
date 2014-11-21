@@ -9,11 +9,12 @@ body {
   src: url(font/quikhand/Quikhand.ttf);
 }
 
-#header {
-  font-size: 24pt;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-align: center;
+span {
+  text-decoration: underline;
+}
+
+a {
+  color: black;
 }
 
 #container {
@@ -23,13 +24,10 @@ body {
   align-items: center;
 }
 
-#actionField {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-#gameField, .sidebar {
+#sidebar {
+  position: fixed;
+  top:35%;
+  left:28%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -37,14 +35,32 @@ body {
   padding: 10px;
 }
 
-#gameField {
-  min-width: 360px; /* can be less if cell border does not exist */
+#header {
+  font-size: 24pt;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
-
 
 #ruleField {
   padding: 15px;
-  width: 400px;
+  width: 440px;
+}
+
+#gameField {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  min-width: 360px;
+}
+
+.footer {
+  font-size: 10pt;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
 }
 
 .row {
@@ -66,10 +82,29 @@ body {
   text-align: center;
   vertical-align: top;
   width: 32px;
+  height: 51px;
+  transition: all 1s ease;
 }
 
 .cell:hover {
-  color: red;
+  background-image: url('img/removed.png');
+  transition: all 1s ease;
+}
+
+.cell.selected {
+  background-image: url('img/marked.png');
+  border: 1px transparent;
+  margin: 1px;
+  width: 32px;
+  height: 51px;
+}
+
+.cell.removed {
+  background-image: url('img/removed.png');
+  border: 1px transparent;
+  height: 51px;
+  margin: 1px;
+  width: 32px;
 }
 
 .rownumber {
@@ -86,25 +121,10 @@ body {
   width: 30px;
 }
 
-.cell.selected {
-  background-image: url('img/marked.png');
-  border: 1px transparent;
-  margin: 1px;
-  width: 32px;
-}
-
-.cell.removed {
-  background-image: url('img/removed.png');
-  border: 1px transparent;
-  height: 49px;
-  margin: 1px;
-  width: 32px;
-}
-
 button {
   border: 2px solid #E1E8EE;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 0px;
   cursor: pointer;
   font-family: Quikhand;
   font-size: 18pt;

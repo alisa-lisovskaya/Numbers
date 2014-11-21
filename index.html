@@ -1,4 +1,5 @@
 <html>
+  
   <head>
     <link href="stylesheet.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="js/prefixfree.min.js"></script>
@@ -9,28 +10,38 @@
     <script type="text/javascript" src="js/GameField.js"></script>
     <title>I'm proud to be a part of this number</title>
   </head>
+  
   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  
   <body>
+    
     <div id="container">
+      
+      <div id="sidebar">
+        <button id="random" onclick="randomMode()">Random</button>
+        <button onclick="start()"><span>R</span>estart</button>
+        <button onclick="cancel()"><span>C</span>ancel</button>
+        <button onclick="addMore()"><span>A</span>dd more</button>
+      </div>
+      
       <div id="header">I'm proud to be a part of this number.</div>
+      
       <div id="ruleField">Delete a pair of numbers if: 
         <ol>
-          <li>they are equal or sum up to 10,</li>
+          <li>they are equal to each other or sum up to 10,</li>
           <li>they are in the same row or column, and</li>
           <li>there is no other number between them</li>
         </ol>
       </div>
-      <div id="actionField">
-        <div class="sidebar">
-          <button onclick="start()">(R)estart</button>
-          <button id="random" onclick="randomMode()">Random</button>
-        </div>
-        <div id="gameField"></div>
-        <div class="sidebar">
-          <button onclick="cancel()">(C)ancel</button>
-          <button onclick="addMore()">(A)dd more</button>
-        </div>
-      </div> 
+      
+      <div id="gameField"></div>
+    
     </div>
+    
+    <div class="footer">
+      For improvements or criticism please <a href="mailto:alles.immer.leer@gmail.com?Subject=Feedback%20on%20Numbers">contact me</a>.
+      <br>Awesome font by Joanne Taylor.
+    </div>
+  
   </body>
 </html>

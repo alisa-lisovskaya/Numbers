@@ -1,8 +1,7 @@
 var g, selectorFn, deselectorFn,
     WINNER = "You are the champion, my friend!",
     RANDOM_MODE = false,
-    keys = [],
-    topPadding = $('.header').height() + $('.ruleField').height();
+    keys = [];
 
 // Main script
 
@@ -13,28 +12,15 @@ $(window).ready(function () {
   start();
 });
 
-// Animates sticky sidebar when page scrolled
-//    beware that it is still fixed positioning & may end up with sidebar being unreachable
-$(function() {
-  var sidebar = $(".sidebar"),  
-      windowObject = $(window),
-      offset = sidebar.offset();
-
-  windowObject.scroll(function() {
-    if (windowObject.scrollTop() > offset.top) {
-        sidebar.stop().animate({
-        marginTop: windowObject.scrollTop() - offset.top + topPadding + 200
-      }, 100);
-    }
-    else {
-      sidebar.stop().animate({ marginTop: 0 }, 100);
-    }
-  });
-});
-
 // Starts the game
 function start () {
   var selectedCell = false,
+      
+      select = function (node) {
+        node.addClass('selected');
+        selectedCell = node;
+      },
+
       deselect = function (node) {
         node.removeClass('selected');
         selectedCell = false; 
@@ -42,27 +28,29 @@ function start () {
 
   // Handles selecting & matching the cells
   selectorFn = function(event) {
-    var node = $(event.target);
+    var node = $(event.target),
+        matched;
 
     // Deselects if a selected cell is clicked
     if (node.is('.selected')) { deselect(node); }
     
     else {
       if (node.text() !== '') {      // we only select non-empty cells
-        if (!selectedCell) {
-          node.addClass('selected');
-          selectedCell = node;
-        }
+        if (!selectedCell) { select(node); }
+
         // matches when the second cell is selected
         else {
-          g.matchCells(selectedCell.attr('id'), node.attr('id')); 
-          deselect(node);
-          paint();
+          matched = g.matchCells(selectedCell.attr('id'), node.attr('id')); 
+          deselect(selectedCell);
+
+          if (matched) { paint(); }
+          else { select(node); }
         }
       } 
     }
   };
   
+  // Handles deselecting the cell when user clicks outside the game field
   deselectorFn = function(event) {
     if (!$(event.target).is('.cell')) { deselect($('.selected')); }
   };
@@ -107,8 +95,6 @@ function addMore () {
 };
 
 // Cancels the last move
-// TODO   can alert when no more moves left to restore: http://api.jqueryui.com/dialog/
-// TODO   can use the same library for rules maybe
 function cancel () {
   if (!g.isWon()) {
     g.restore();
@@ -116,6 +102,7 @@ function cancel () {
   }
 };
 
+// Sets the game mode to random
 function randomMode () {
   RANDOM_MODE = !RANDOM_MODE;
   start();
