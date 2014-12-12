@@ -202,9 +202,9 @@ GameField.prototype.addMore = function () {
 
 // Restores the last removed pair to the field
 GameField.prototype.restore = function () {
-  var move, c1, c2;
+  var move, c1, c2, canRestore = (this.memory.length > 0);
   
-  if (this.memory.length > 0) {
+  if (canRestore) {
     move = this.memory.pop();
     
     c1 = move.cell1;
@@ -224,6 +224,8 @@ GameField.prototype.restore = function () {
   }
   
   this.updateRowCount();
+
+  return canRestore;
 };
 
 // Restores the row with the given number (filled with empty cells)

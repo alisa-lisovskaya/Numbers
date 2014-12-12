@@ -29,7 +29,8 @@ function start () {
   // Handles selecting & matching the cells
   selectorFn = function(event) {
     var node = $(event.target),
-        matched;
+        matched,
+        self = this;
 
     // Deselects if a selected cell is clicked
     if (node.is('.selected')) { deselect(node); }
@@ -59,7 +60,17 @@ function start () {
 
   $(window).scrollTop(0);
   paint();
+  showRules();
 };
+
+function showRules () {
+  noty({ 
+        text: '<div id="ruleField">Delete a pair of numbers if: <ol><li>they are equal to each other or sum up to 10,</li><li>they are in the same row or column, and</li><li>there is no other number between them</li></ol></div>',
+        theme: 'relax',
+        type: 'alert',
+        layout: 'topCenter'
+      });
+}
  
 // Handles the pressed keys
 function keysPressed (k) {
@@ -97,8 +108,17 @@ function addMore () {
 // Cancels the last move
 function cancel () {
   if (!g.isWon()) {
-    g.restore();
+    var ret = g.restore();
     paint();
+    if (!ret) { 
+      noty({ 
+        text: 'Nothing to restore!<br>(Also, you cannot cancel after you used ADD MORE)',
+        theme: 'relax',
+        type: 'alert',
+        layout: 'center',
+        timeout: 2000
+      });
+    }
   }
 };
 
