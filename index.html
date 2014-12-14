@@ -15,24 +15,20 @@
   
   <body>
     
-    <div id="container">
+    <div class="container">
       
-      <div id="sidebar">
-        <button id="random" onclick="randomMode()">Random</button>
-        <button onclick="start()"><span>R</span>estart</button>
-        <button onclick="cancel()"><span>C</span>ancel</button>
-        <button onclick="addMore()"><span>A</span>dd more</button>
-        <button onclick="showRules()"><span>S</span>how rules</button>
+      
+      <div class="menu">
+        <div class="menuRow">
+        <button class="wide" id="random" onclick="randomMode()">Random</button>
+        <button class="wide" onclick="start()"><u>R</u>estart</button>
       </div>
       
-      <div id="header">I'm proud to be a part of this number.</div>
-      
-      <div id="ruleField">Delete a pair of numbers if: 
-        <ol>
-          <li>they are equal to each other or sum up to 10,</li>
-          <li>they are in the same row or column, and</li>
-          <li>there is no other number between them</li>
-        </ol>
+      <div class="menuRow">
+        <button onclick="cancel()"><u>C</u>ancel</button>
+        <button onclick="addMore()"><u>A</u>dd more</button>
+        <button onclick="showRules()"><u>S</u>how rules</button>
+      </div>
       </div>
       
       <div id="gameField"></div>

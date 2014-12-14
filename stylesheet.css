@@ -9,42 +9,38 @@ body {
   src: url(font/quikhand/Quikhand.ttf);
 }
 
-span {
-  text-decoration: underline;
-}
-
 a {
   color: black;
 }
 
-#container {
+li {
+  text-align: left;
+}
+
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
-#sidebar {
+.menu {
   position: fixed;
-  top:35%;
-  left:28%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 5px;
+  background-color: white;
 }
 
-#header {
-  font-size: 24pt;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-#ruleField {
-  padding: 15px;
-  width: 440px;
+.menuRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 #gameField {
@@ -52,6 +48,7 @@ a {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin-top: 100px;
   padding: 10px;
   min-width: 360px;
 }
@@ -124,16 +121,21 @@ a {
 
 button {
   border: 2px solid #E1E8EE;
-  background-color: white;
+  background-image:url('img/back.jpg');
+  /*background-color: white;*/
   border-radius: 0px;
   cursor: pointer;
   font-family: Quikhand;
-  font-size: 18pt;
-  height: 40px;
+  font-size: 12pt;
+  height: 30px;
   margin: 0 5 5 5px;
   outline: none;
   text-transform: uppercase;
-  width: 150px;
+  width: 100px;
+}
+
+button.wide {
+  width: 155px;
 }
 
 button:hover {

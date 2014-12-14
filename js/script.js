@@ -68,7 +68,9 @@ function showRules () {
         text: '<div id="ruleField">Delete a pair of numbers if: <ol><li>they are equal to each other or sum up to 10,</li><li>they are in the same row or column, and</li><li>there is no other number between them</li></ol></div>',
         theme: 'relax',
         type: 'alert',
-        layout: 'topCenter'
+        layout: 'topRight',
+        maxVisible: 1,
+        killer: true
       });
 }
  
@@ -89,6 +91,11 @@ function keysPressed (k) {
   // A
   if (keys[65]) {
     addMore();
+  }
+
+  // S
+  if (keys[83]) {
+    showRules();
   }
 };
 
@@ -116,6 +123,7 @@ function cancel () {
         theme: 'relax',
         type: 'alert',
         layout: 'center',
+        maxVisible: 1,
         timeout: 2000
       });
     }
