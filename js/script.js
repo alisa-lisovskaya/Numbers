@@ -60,7 +60,6 @@ function start () {
 
   $(window).scrollTop(0);
   paint();
-  showRules();
 };
 
 function showRules () {
